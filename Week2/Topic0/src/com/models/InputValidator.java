@@ -8,6 +8,7 @@ public class InputValidator
 {
     public static final String SYSTEM_PROCESS_INPUT = "cs";
     public static final String APPLICATION_PROCESS_INPUT = "ca";
+    public static final String DELETE_PROCESS = "d";
     public static final String END_EXECUTION = "exit";
 
     private static InputValidator inputValidator;

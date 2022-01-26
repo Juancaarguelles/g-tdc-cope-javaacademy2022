@@ -1,4 +1,4 @@
-package com.company;
+package com.view;
 
 import com.enums.ProcessType;
 import com.exceptions.InputValidWordException;
@@ -32,6 +32,7 @@ public class Main {
             System.out.println("TYPE AN OPTION\n" +
                     "*. Type 'cs' in order to add a system process\n" +
                     "*. Type 'ca' in order to add an application process\n" +
+                    "*. Type 'd + (ID process)' to delete an specific process\n"+
                     "*. Type 'exit' in order to finish this program");
 
             option = input.next();

@@ -65,22 +65,7 @@ public class ProcessMemory {
             throw new MemoryOverFlowException("There is no memory");
     }
 
-    public int getAvailableSpacesProcess()
-    {
-        int rows = this.memory.length;
-        int columns = this.memory[0].length;
-        this.availableSpaces = 0;
 
-        for(int i = 0; i < rows; i++)
-        {
-            for(int j = 0; j < columns; j++)
-            {
-                if(this.memory[i][j] == null)
-                    this.availableSpaces++;
-            }
-        }
-        return this.availableSpaces;
-    }
 
     public void setAvailableSpaces(int availableSpaces)
     {
@@ -183,7 +168,7 @@ public class ProcessMemory {
 
             }
             while (availableSpaces < amountProcessNeeded) ;
-            System.out.println("End do while");
-
+            addProcess(amountProcessNeeded, type);
+            System.out.println("Remaining memory : "+this.availableSpaces);
     }
 }
