@@ -28,20 +28,31 @@ public class Main
         do {
             int option = 0;
             do {
-                System.out.println("1. See Database Users\n" +
-                        "2. Find User in cache memory\n");
+                System.out.println("1. add Database Users\n" +
+                        "2. See database users\n"+
+                        "3. Find User in cache memory\n");
                 option = input.nextInt();
             }
-            while (option < 1 || option > 2);
+            while (option < 1 || option > 3);
 
-            switch (option) {
+            switch (option)
+            {
                 case 1:
-                    dbController.getDatabaseInfo();
+                    input.nextLine();
+                    System.out.println("Type the ID for the user : ");
+                    String id = input.nextLine();
+
+                    System.out.println("Type the name for the user : ");
+                    String name = input.nextLine();
+                    
+                    dbController.addUser(id, name);
                     break;
                 case 2:
+                    dbController.getDatabaseInfo();
+                    break;
+                case 3:
                     System.out.print("Insert the id of the user : ");
-                    String id = input.next();
-                    //System.out.println("The id typed is "+id.toLowerCase());
+                    id = input.next();
                     cacheMemoryController.getUser(id);
                     break;
                 default:
