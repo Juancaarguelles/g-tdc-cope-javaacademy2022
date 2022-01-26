@@ -1,16 +1,18 @@
 package com.models;
 
+import com.enums.ProcessType;
 import com.exceptions.MemoryOverFlowException;
 
 public class ProcessMemory {
+    public static int ID_ITERATOR = 0;
     private static ProcessMemory processMemory;
 
     private String[][] memory;
     private int availableSpaces;
 
     private ProcessMemory() {
-        memory = new String[20][10];
-        this.availableSpaces = 0;
+        memory = new String[10][5];
+        this.availableSpaces = this.memory.length * this.memory[0].length;
     }
 
     public static ProcessMemory getProcessMemory() {
@@ -35,11 +37,11 @@ public class ProcessMemory {
         }
     }
 
-    public boolean canAddProcess(int processAmount) throws MemoryOverFlowException
+    public boolean canAddProcess(int processAmount, ProcessType type) throws MemoryOverFlowException
     {
         if(processAmount <= this.availableSpaces)
         {
-            addProcess(processAmount, true);
+            addProcess(processAmount, type);
             return true;
         }
         else
@@ -72,12 +74,14 @@ public class ProcessMemory {
         return this.availableSpaces;
     }
 
-    public void addProcess( int amount, boolean flag)
+    public void addProcess( int amount, ProcessType type)
     {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
 
         int counter = 0;
+
+        String units = ID_ITERATOR < 10 ? "00" : "0";
 
         for(int i = 0; i < rows; i++)
         {
@@ -85,18 +89,79 @@ public class ProcessMemory {
             {
                 if(this.memory[i][j] == null && counter < amount)
                 {
-                    if(flag)
-                        this.memory[i][j] = "1111 ";
+                    if(type == ProcessType.SYSTEM)
+                        this.memory[i][j] = "s"+units+ + ID_ITERATOR + " ";
                     else
-                        this.memory[i][j] = "0000 ";
+                        this.memory[i][j] = "a"+units + ID_ITERATOR + " ";
+
                     counter++;
+                    this.availableSpaces--;
 
                     if(counter >= amount)
                         break;
                 }
             }
         }
+        System.out.println(this.availableSpaces);
+        ID_ITERATOR++;
         this.showMemorySpace();
+    }
+
+    public void removeProcess(int amountProcessNeeded, ProcessType type)
+    {
+        int rows = this.memory.length;
+        int columns = this.memory[0].length;
+        int counter = 0;
+        boolean mustRemove = true;
+
+        do {
+
+            String processId = this.memory[0][0];
+            System.out.println(processId);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (this.memory[i][j].equalsIgnoreCase(processId))
+                    {
+                        counter = ++this.availableSpaces;
+                    }
+                    else
+                    {
+                        if(counter >= amountProcessNeeded)
+                        {
+                            mustRemove = false;
+                            break;
+                        }
+                        else
+                        {
+                            processId = this.memory[i][j];
+                            ++counter;
+                        }
+                    }
+                }
+                if(!mustRemove)
+                    break;
+            }
+
+            System.out.println("Counteeer : "+counter);
+
+            System.out.println("Jump");
+
+            /*
+            for (int x = counter % rows; x < rows; x++)
+            {
+                for (int y = counter; y < columns; y++)
+                {
+                    this.memory[x - (counter% rows)][y - counter] = this.memory[x][y];
+                }
+            }
+
+             */
+        }while (counter >= amountProcessNeeded);
+
+        this.addProcess(amountProcessNeeded, type);
     }
 
 }
