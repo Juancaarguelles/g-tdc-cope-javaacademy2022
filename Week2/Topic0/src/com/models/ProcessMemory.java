@@ -9,6 +9,7 @@ public class ProcessMemory {
     public static int ID_ITERATOR = 0;
     public static int ID_GARBAGE_COLLECTOR = 0;
     private static ProcessMemory processMemory;
+    private static String EMPTY_SIGN = "**** ";
 
     private String[][] memory;
     private int availableSpaces;
@@ -16,6 +17,7 @@ public class ProcessMemory {
     private ProcessMemory() {
         memory = new String[7][5];
         this.availableSpaces = this.memory.length * this.memory[0].length;
+        initializeMemory();
     }
 
     public static ProcessMemory getProcessMemory() {
@@ -25,15 +27,27 @@ public class ProcessMemory {
         return processMemory;
     }
 
+    private void initializeMemory()
+    {
+        int rows = this.memory.length;
+        int columns = this.memory[0].length;
+
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
+            {
+                if(this.memory[i][j] == null)
+                    this.memory[i][j] = EMPTY_SIGN;
+            }
+        }
+    }
+
     public void showMemorySpace() {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (this.memory[i][j] == null)
-                    System.out.print("**** ");
-                else
                     System.out.print(this.memory[i][j]);
             }
             System.out.println("");
@@ -91,7 +105,7 @@ public class ProcessMemory {
         {
             for(int j = 0; j < columns; j++)
             {
-                if(this.memory[i][j] == null && counter < amount)
+                if(this.memory[i][j] == EMPTY_SIGN && counter < amount)
                 {
                     if(type == ProcessType.SYSTEM)
                         this.memory[i][j] = "s"+units+ + ID_ITERATOR + " ";
@@ -111,32 +125,26 @@ public class ProcessMemory {
         this.showMemorySpace();
     }
 
-    public void removeProcess(int amountProcessNeeded, ProcessType type)
-    {
+
+
+    public void removeProcess(int amountProcessNeeded, ProcessType type) {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
         int amountSpacesToMove = 0;
         boolean canSkip = false;
-        String units = ID_GARBAGE_COLLECTOR < 10 ? "00" : "0";
-        String prefix = type == ProcessType.SYSTEM ? "s" : "a";
 
-
-        do
-        {
+        do {
             amountSpacesToMove = 0;
             String processId = this.memory[0][0];
-            System.out.println("Process ID : "+processId);
+            System.out.println("Process ID : " + processId);
 
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (this.memory[i][j].equalsIgnoreCase(processId))
-                    {
-                        this.memory[i][j] = null;
-                         this.availableSpaces = ++amountSpacesToMove;
-                    }
-                    else {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    if (this.memory[i][j].equalsIgnoreCase(processId)) {
+                        this.memory[i][j] = EMPTY_SIGN;
+                        this.availableSpaces++;
+                        amountSpacesToMove++;
+                    } else {
                         canSkip = true;
                         break;
                     }
@@ -144,79 +152,38 @@ public class ProcessMemory {
                 if (canSkip)
                     break;
             }
+
+            System.out.println("Amount Spaces to move : " + amountSpacesToMove);
             canSkip = false;
+
             System.out.println("--REMOVING--");
-            showMemorySpace();
 
-            int row = amountSpacesToMove / columns;
-            int column = amountSpacesToMove % columns;
-            processId = this.memory[row][column];
-            System.out.println("Spaces to move : "+amountSpacesToMove);
-            System.out.println("Row : "+row+" Column : "+column);
-            processId = this.memory[row][column];
-            System.out.println("process id : "+processId);
-            int filledSpacesAmount = (rows * columns) - getAvailableSpacesProcess();
-            System.out.println("Spaces used by memory : "+filledSpacesAmount);
+            for (int i = 0; i < amountSpacesToMove; i++) {
+                String first = this.memory[0][0];
+                int tempColumn = 1;
+                int tempRow = 0;
+                for (int x = 0; x < rows; x++) {
 
-            int rowBound = (filledSpacesAmount % rows == 0) ? filledSpacesAmount / rows : (filledSpacesAmount / rows) + 1;
-            int columnBound = filledSpacesAmount % rows;
-
-            for(int i = 0; i < rowBound; i++)
-            {
-                for(int j = 0, bound = (i == rowBound - 1) ? columnBound : columns; j < bound; j++)
-                {
-                    if(column >= bound)
-                    {
-                        column = 0;
-                        row = 0;
-                    }
-                    this.memory[i][j] = this.memory[row][column++];
-                }
-            }
-
-
-            /*
-            for(int i = amountSpacesToMove / columns; i < (amountSpacesToMove / columns) + rows; i++)
-            {
-                for(int j = amountSpacesToMove % columns; j < columns + (amountSpacesToMove % columns); j++)
-                {
-                    if(this.memory[i - (amountSpacesToMove/columns)][j - (amountSpacesToMove%columns)] == null )
-                    this.memory[i - (amountSpacesToMove/columns)][j - (amountSpacesToMove%columns)] = this.memory[i][j];
-                    else
-                    {
-                        canSkip = true;
-                        break;
+                    for (int y = 0; y < columns; y++) {
+                        if (tempColumn >= columns) {
+                            tempColumn = 0;
+                            if (tempRow < rows - 1)
+                                tempRow++;
+                        }
+                        this.memory[x][y] = this.memory[tempRow][tempColumn++];
                     }
                 }
-                if(canSkip)
-                    break;
+                this.memory[memory.length - 1][memory[0].length - 1] = first;
             }
-             */
 
-            /*
-            int row = amountSpacesToMove / rows;
-            int column = amountSpacesToMove % columns;
+                showMemorySpace();
 
-            for(int i = 0; i < rows; i++)
-            {
-                for(int j = 0; j < columns; j++)
-                {
-                    if(column >= columns)
-                     row = column = 0;
+                if (availableSpaces < amountProcessNeeded)
+                    System.out.println("Deleting more space because it is still not enough");
 
-                    this.memory[i][j] = this.memory[row][column++];
-                }
-                row = 0;
-                column = 0;
             }
-            */
-            //showMemorySpace();
+            while (availableSpaces < amountProcessNeeded) ;
+            System.out.println("End do while");
 
-
-
-        }while(availableSpaces < amountProcessNeeded);
-        showMemorySpace();
-        System.out.println("End do while");
     }
-
 }
