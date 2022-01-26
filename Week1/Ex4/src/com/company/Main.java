@@ -44,7 +44,7 @@ public class Main
 
                     System.out.println("Type the name for the user : ");
                     String name = input.nextLine();
-                    
+
                     dbController.addUser(id, name);
                     break;
                 case 2:
