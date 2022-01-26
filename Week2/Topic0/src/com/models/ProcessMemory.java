@@ -3,8 +3,11 @@ package com.models;
 import com.enums.ProcessType;
 import com.exceptions.MemoryOverFlowException;
 
+import java.lang.reflect.Type;
+
 public class ProcessMemory {
     public static int ID_ITERATOR = 0;
+    public static int ID_GARBAGE_COLLECTOR = 0;
     private static ProcessMemory processMemory;
 
     private String[][] memory;
@@ -112,56 +115,21 @@ public class ProcessMemory {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
         int counter = 0;
-        boolean mustRemove = true;
+        String units = ID_GARBAGE_COLLECTOR < 10 ? "00" : "0";
+        String prefix = type == ProcessType.SYSTEM ? "s" : "a";
+        String processId = this.memory[0][0];
 
-        do {
+        System.out.println(processId);
 
-            String processId = this.memory[0][0];
-            System.out.println(processId);
-
-            for (int i = 0; i < rows; i++)
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
             {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (this.memory[i][j].equalsIgnoreCase(processId))
-                    {
-                        counter = ++this.availableSpaces;
-                    }
-                    else
-                    {
-                        if(counter >= amountProcessNeeded)
-                        {
-                            mustRemove = false;
-                            break;
-                        }
-                        else
-                        {
-                            processId = this.memory[i][j];
-                            ++counter;
-                        }
-                    }
-                }
-                if(!mustRemove)
-                    break;
+
             }
+        }
 
-            System.out.println("Counteeer : "+counter);
 
-            System.out.println("Jump");
-
-            /*
-            for (int x = counter % rows; x < rows; x++)
-            {
-                for (int y = counter; y < columns; y++)
-                {
-                    this.memory[x - (counter% rows)][y - counter] = this.memory[x][y];
-                }
-            }
-
-             */
-        }while (counter >= amountProcessNeeded);
-
-        this.addProcess(amountProcessNeeded, type);
     }
 
 }
