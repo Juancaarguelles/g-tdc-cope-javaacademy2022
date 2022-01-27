@@ -30,11 +30,13 @@ public class Main {
         System.out.println(pm.getAvailableSpaces());
 
         do {
-            System.out.println("TYPE AN OPTION\n" +
+            System.out.println("----------------------------------------------------");
+            System.out.println("\tTYPE AN OPTION\n" +
                     "*. Type 'cs' in order to add a system process\n" +
                     "*. Type 'ca' in order to add an application process\n" +
                     "*. Type 'd + (ID process)' to delete an specific process\n"+
                     "*. Type 'exit' in order to finish this program");
+            System.out.println("----------------------------------------------------");
 
             option = input.next();
 

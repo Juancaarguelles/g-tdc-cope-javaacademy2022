@@ -48,12 +48,15 @@ public class ProcessMemory {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
 
+        System.out.println("----------------------------------------------------");
         for (int i = rows - 1; i >= 0; i--) {
             for (int j = 0; j < columns; j++) {
                     System.out.print(this.memory[i][j]);
             }
             System.out.println("");
         }
+        System.out.println("----------------------------------------------------");
+
     }
 
     public boolean canAddProcess(int processAmount, ProcessType type) throws MemoryProcessException
@@ -186,6 +189,7 @@ public class ProcessMemory {
                             catchedFirstIdPos = true;
                         }
                         this.memory[i][j] = EMPTY_SIGN;
+                        this.availableSpaces++;
                         positionsToMove++;
                     }
                     else
@@ -216,8 +220,7 @@ public class ProcessMemory {
         System.out.println("Last pos : ["+lastPosIdX+"]["+lastPosIdY+"]");
         showMemorySpace();
 
-
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < positionsToMove; i++)
         {
             String first = this.memory[firstPosIdX][firstPosIdY];
             int tempColumn = firstPosIdY + 1;
@@ -227,13 +230,13 @@ public class ProcessMemory {
             for (int x = firstPosIdX; x < rows; x++)
             {
                 int y = x == f ? firstPosIdY : 0;
-                System.out.println("Hey");
+                //System.out.println("Hey");
                 for (; y < columns; y++)
                 {
                     if (tempColumn >= columns)
                     {
                         tempColumn = 0;
-                        if (tempRow < lastPosIdX - 1)
+                        if (tempRow < rows - 1)
                             tempRow++;
                     }
                     this.memory[x][y] = this.memory[tempRow][tempColumn++];
@@ -242,7 +245,10 @@ public class ProcessMemory {
             }
             this.memory[memory.length - 1][memory[0].length - 1] = first;
         }
-        System.out.println("");
+
+
+
+        System.out.println("Available spaces in memory : "+availableSpaces);
         showMemorySpace();
 
 
