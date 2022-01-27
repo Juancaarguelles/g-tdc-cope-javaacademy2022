@@ -48,7 +48,7 @@ public class ProcessMemory {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
 
-        for (int i = 0; i < rows; i++) {
+        for (int i = rows - 1; i >= 0; i--) {
             for (int j = 0; j < columns; j++) {
                     System.out.print(this.memory[i][j]);
             }
