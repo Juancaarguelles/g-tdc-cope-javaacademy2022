@@ -156,7 +156,6 @@ public class ProcessMemory {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
         int firstPosIdX = 0, firstPosIdY = 0;
-        int lastPosIdX = 0, lastPosIdY = 0;
         int tempId = 0;
         boolean catchedFirstIdPos = false, catchedLastPos = false;
         int positionsToMove = 0;
@@ -185,40 +184,16 @@ public class ProcessMemory {
                         {
                             firstPosIdX = i;
                             firstPosIdY = j;
-                            System.out.println("First POS ID : " + this.memory[firstPosIdX][firstPosIdY]);
                             catchedFirstIdPos = true;
                         }
                         this.memory[i][j] = EMPTY_SIGN;
                         this.availableSpaces++;
                         positionsToMove++;
                     }
-                    else
-                    {
-                    if(catchedFirstIdPos && !catchedLastPos)
-                    {
-                        lastPosIdX = i;
-                        lastPosIdY = j;
-                        catchedLastPos = true;
-                    }
-                    }
-                }
-                else
-                {
-                    if(catchedFirstIdPos && !catchedLastPos)
-                    {
-                        lastPosIdX = i;
-                        lastPosIdY = j;
-                        catchedLastPos = true;
-                    }
                 }
             }
         }
-        System.out.println("Hey");
-        System.out.println("Poisitions to move : "+positionsToMove);
-        //System.out.println("ID Process : "+memory[firstPosIdX][firstPosIdY]);
-        System.out.println("First pos : ["+firstPosIdX+"]["+firstPosIdY+"]");
-        System.out.println("Last pos : ["+lastPosIdX+"]["+lastPosIdY+"]");
-        showMemorySpace();
+
 
         for (int i = 0; i < positionsToMove; i++)
         {
