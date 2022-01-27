@@ -13,8 +13,7 @@ public class InputValidator
 
     private static InputValidator inputValidator;
 
-    private InputValidator()
-    {
+    private InputValidator() {
 
     }
 
@@ -36,7 +35,6 @@ public class InputValidator
                 !input.equalsIgnoreCase(APPLICATION_PROCESS_INPUT) &&
                 !input.equalsIgnoreCase(END_EXECUTION))
             throw new InputValidWordException("Type a valid option please");
-
 
     }
 }

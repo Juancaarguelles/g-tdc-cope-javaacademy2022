@@ -1,6 +1,6 @@
 package com.exceptions;
 
-public class MemoryOverFlowException extends Exception
+public class MemoryOverFlowException extends MemoryProcessException
 {
     public MemoryOverFlowException(String message)
     {

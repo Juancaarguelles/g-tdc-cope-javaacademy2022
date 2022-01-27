@@ -3,6 +3,7 @@ package com.view;
 import com.enums.ProcessType;
 import com.exceptions.InputValidWordException;
 import com.exceptions.MemoryOverFlowException;
+import com.exceptions.MemoryProcessException;
 import com.models.InputValidator;
 import com.models.ProcessMemory;
 
@@ -63,14 +64,14 @@ public class Main {
                     System.out.println("Adding applicaction process");
                     type = ProcessType.APPLICATION;
                     amountProcess = r.nextInt((APPLICACTION_PROCESS_MAX_BOUND + 1) - APPLICATION_PROCESS_MIN_BOUND) + APPLICATION_PROCESS_MIN_BOUND;
-                }
 
+                }
                 try
                 {
                     System.out.println("Amount required for the new system process : "+amountProcess);
                     pm.canAddProcess(amountProcess, type);
                 }
-                catch (MemoryOverFlowException e) {
+                catch (MemoryProcessException e) {
                     System.out.println(e.getMessage());
                     pm.removeProcess(amountProcess, type);
                 }

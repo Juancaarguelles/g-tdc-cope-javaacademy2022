@@ -1,7 +1,9 @@
 package com.models;
 
 import com.enums.ProcessType;
+import com.exceptions.MemoryIDProcessException;
 import com.exceptions.MemoryOverFlowException;
+import com.exceptions.MemoryProcessException;
 
 import java.lang.reflect.Type;
 
@@ -54,7 +56,7 @@ public class ProcessMemory {
         }
     }
 
-    public boolean canAddProcess(int processAmount, ProcessType type) throws MemoryOverFlowException
+    public boolean canAddProcess(int processAmount, ProcessType type) throws MemoryProcessException
     {
         if(processAmount <= this.availableSpaces)
         {
@@ -110,7 +112,14 @@ public class ProcessMemory {
         this.showMemorySpace();
     }
 
-
+    public boolean removeSpecificProcess(int processId) throws MemoryProcessException
+    {
+        if(processId >= ID_GARBAGE_COLLECTOR && processId <= ID_ITERATOR) {
+            return true;
+        }
+        else
+            throw new MemoryIDProcessException("The ID process is not found");
+    }
 
     public void removeProcess(int amountProcessNeeded, ProcessType type) {
         int rows = this.memory.length;
@@ -131,6 +140,7 @@ public class ProcessMemory {
                         amountSpacesToMove++;
                     } else {
                         canSkip = true;
+                        ID_GARBAGE_COLLECTOR++;
                         break;
                     }
                 }
