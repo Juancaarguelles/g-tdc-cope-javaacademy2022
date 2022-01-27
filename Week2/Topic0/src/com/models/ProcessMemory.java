@@ -153,8 +153,9 @@ public class ProcessMemory {
         int rows = this.memory.length;
         int columns = this.memory[0].length;
         int firstPosIdX = 0, firstPosIdY = 0;
+        int lastPosIdX = 0, lastPosIdY = 0;
         int tempId = 0;
-        boolean catchedFirstIdPos = false;
+        boolean catchedFirstIdPos = false, catchedLastPos = false;
         int positionsToMove = 0;
 
         boolean greatherThan9 = id > 9;
@@ -162,7 +163,8 @@ public class ProcessMemory {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++)
             {
-                if(!this.memory[i][j].equalsIgnoreCase(EMPTY_SIGN)) {
+                if(!this.memory[i][j].equalsIgnoreCase(EMPTY_SIGN))
+                {
                     try {
                         if (greatherThan9) {
                             tempId = Integer.parseInt(this.memory[i][j].substring(2, 4));
@@ -186,20 +188,64 @@ public class ProcessMemory {
                         this.memory[i][j] = EMPTY_SIGN;
                         positionsToMove++;
                     }
+                    else
+                    {
+                    if(catchedFirstIdPos && !catchedLastPos)
+                    {
+                        lastPosIdX = i;
+                        lastPosIdY = j;
+                        catchedLastPos = true;
+                    }
+                    }
+                }
+                else
+                {
+                    if(catchedFirstIdPos && !catchedLastPos)
+                    {
+                        lastPosIdX = i;
+                        lastPosIdY = j;
+                        catchedLastPos = true;
+                    }
                 }
             }
         }
         System.out.println("Hey");
+        System.out.println("Poisitions to move : "+positionsToMove);
+        //System.out.println("ID Process : "+memory[firstPosIdX][firstPosIdY]);
+        System.out.println("First pos : ["+firstPosIdX+"]["+firstPosIdY+"]");
+        System.out.println("Last pos : ["+lastPosIdX+"]["+lastPosIdY+"]");
         showMemorySpace();
-        /*
-        for(int i = 0; i < rows; i++)
+
+
+        for (int i = 0; i < 1; i++)
         {
-            for(int j = 0; j < columns; j++)
+            String first = this.memory[firstPosIdX][firstPosIdY];
+            int tempColumn = firstPosIdY + 1;
+            int tempRow = firstPosIdX;
+            int f = firstPosIdX;
+
+            for (int x = firstPosIdX; x < rows; x++)
             {
-                if
+                int y = x == f ? firstPosIdY : 0;
+                System.out.println("Hey");
+                for (; y < columns; y++)
+                {
+                    if (tempColumn >= columns)
+                    {
+                        tempColumn = 0;
+                        if (tempRow < lastPosIdX - 1)
+                            tempRow++;
+                    }
+                    this.memory[x][y] = this.memory[tempRow][tempColumn++];
+                }
+                y = 0;
             }
+            this.memory[memory.length - 1][memory[0].length - 1] = first;
         }
-         */
+        System.out.println("");
+        showMemorySpace();
+
+
     }
 
 

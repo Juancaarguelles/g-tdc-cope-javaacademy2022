@@ -53,7 +53,7 @@ public class Main {
 
             if(!option.equalsIgnoreCase(InputValidator.END_EXECUTION))
             {
-                if(!option.equalsIgnoreCase(InputValidator.DELETE_PROCESS))
+                if(!option.equalsIgnoreCase(InputValidator.DELETE_PROCESS) && !option.contains(InputValidator.DELETE_PROCESS))
                 {
                 if(option.equalsIgnoreCase(InputValidator.SYSTEM_PROCESS_INPUT))
                 {
@@ -80,8 +80,27 @@ public class Main {
                 }
                 else
                 {
+                    int id = 0;
                     try {
-                        pm.specificIDProcessExists(2);
+                        if(option.length()>1) {
+                            String number = "";
+                            if(option.length()==2)
+                            number = option.substring(1);
+                            if(option.length() == 3)
+                            number = option.substring(1,3);
+                            System.out.println(number);
+
+                            try
+                            {
+                                id = Integer.parseInt(number);
+                            }catch (Exception e)
+                            {
+                                System.out.println("Not a number");
+                                continue;
+                            }
+
+                        }
+                        pm.specificIDProcessExists(id);
                     } catch (MemoryProcessException e)
                     {
                         System.out.println(e.getMessage());
