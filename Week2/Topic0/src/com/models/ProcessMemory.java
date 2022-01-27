@@ -17,7 +17,7 @@ public class ProcessMemory {
     private int availableSpaces;
 
     private ProcessMemory() {
-        memory = new String[7][5];
+        memory = new String[20][10];
         this.availableSpaces = this.memory.length * this.memory[0].length;
         initializeMemory();
     }
