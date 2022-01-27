@@ -53,6 +53,8 @@ public class Main {
 
             if(!option.equalsIgnoreCase(InputValidator.END_EXECUTION))
             {
+                if(!option.equalsIgnoreCase(InputValidator.DELETE_PROCESS))
+                {
                 if(option.equalsIgnoreCase(InputValidator.SYSTEM_PROCESS_INPUT))
                 {
                     System.out.println("Adding system process");
@@ -74,6 +76,16 @@ public class Main {
                 catch (MemoryProcessException e) {
                     System.out.println(e.getMessage());
                     pm.removeProcess(amountProcess, type);
+                }
+                }
+                else
+                {
+                    try {
+                        pm.specificIDProcessExists(2);
+                    } catch (MemoryProcessException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
 

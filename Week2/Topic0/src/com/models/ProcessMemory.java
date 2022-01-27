@@ -112,14 +112,96 @@ public class ProcessMemory {
         this.showMemorySpace();
     }
 
-    public boolean removeSpecificProcess(int processId) throws MemoryProcessException
+    public boolean specificIDProcessExists(int processId) throws MemoryProcessException
     {
-        if(processId >= ID_GARBAGE_COLLECTOR && processId <= ID_ITERATOR) {
-            return true;
+        try
+        {
+            int rows = this.memory.length;
+            int columns = this.memory[0].length;
+
+            boolean greatherThan9 = processId > 9;
+            int tempId = 0;
+
+            for(int i = 0; i < rows; i++)
+            {
+                for(int j = 0; j < columns; j++)
+                {
+                    if(!this.memory[i][j].equalsIgnoreCase(EMPTY_SIGN))
+                    {
+                        if (greatherThan9) {
+                            tempId = Integer.parseInt(this.memory[i][j].substring(2, 4));
+                        } else {
+                            tempId = Integer.parseInt(this.memory[i][j].substring(3, 4));
+                        }
+
+                        if(tempId == processId)
+                        {
+                            removeSpecifiedProcess(processId);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
-        else
             throw new MemoryIDProcessException("The ID process is not found");
     }
+
+    public void removeSpecifiedProcess(int id) {
+        int rows = this.memory.length;
+        int columns = this.memory[0].length;
+        int firstPosIdX = 0, firstPosIdY = 0;
+        int tempId = 0;
+        boolean catchedFirstIdPos = false;
+        int positionsToMove = 0;
+
+        boolean greatherThan9 = id > 9;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++)
+            {
+                if(!this.memory[i][j].equalsIgnoreCase(EMPTY_SIGN)) {
+                    try {
+                        if (greatherThan9) {
+                            tempId = Integer.parseInt(this.memory[i][j].substring(2, 4));
+                        } else {
+                            tempId = Integer.parseInt(this.memory[i][j].substring(3, 4));
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+
+                    if (tempId == id)
+                    {
+                        if (!catchedFirstIdPos)
+                        {
+                            firstPosIdX = i;
+                            firstPosIdY = j;
+                            System.out.println("First POS ID : " + this.memory[firstPosIdX][firstPosIdY]);
+                            catchedFirstIdPos = true;
+                        }
+                        this.memory[i][j] = EMPTY_SIGN;
+                        positionsToMove++;
+                    }
+                }
+            }
+        }
+        System.out.println("Hey");
+        showMemorySpace();
+        /*
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
+            {
+                if
+            }
+        }
+         */
+    }
+
 
     public void removeProcess(int amountProcessNeeded, ProcessType type) {
         int rows = this.memory.length;
@@ -153,13 +235,16 @@ public class ProcessMemory {
 
             System.out.println("--REMOVING--");
 
-            for (int i = 0; i < amountSpacesToMove; i++) {
+            for (int i = 0; i < amountSpacesToMove; i++)
+            {
                 String first = this.memory[0][0];
                 int tempColumn = 1;
                 int tempRow = 0;
-                for (int x = 0; x < rows; x++) {
 
-                    for (int y = 0; y < columns; y++) {
+                for (int x = 0; x < rows; x++)
+                {
+                    for (int y = 0; y < columns; y++)
+                    {
                         if (tempColumn >= columns) {
                             tempColumn = 0;
                             if (tempRow < rows - 1)

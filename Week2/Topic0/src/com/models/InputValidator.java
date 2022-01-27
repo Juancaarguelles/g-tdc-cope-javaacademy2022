@@ -33,7 +33,7 @@ public class InputValidator
             throw  new InputValidWordException("You probably wanted to type 'exit'\n Try again please");
         else if(!input.equalsIgnoreCase(SYSTEM_PROCESS_INPUT) &&
                 !input.equalsIgnoreCase(APPLICATION_PROCESS_INPUT) &&
-                !input.equalsIgnoreCase(END_EXECUTION))
+                !input.equalsIgnoreCase(END_EXECUTION) && !input.equalsIgnoreCase(DELETE_PROCESS))
             throw new InputValidWordException("Type a valid option please");
 
     }
