@@ -1,20 +1,59 @@
 package com.models;
 
-public class AlienBuilder extends AbstractBuilder
+public class AlienBuilder
 {
+    private String id;
+    private String name;
+    private String planet;
+    private boolean isMale;
+    private int age;
+    private float heigt;
+    private boolean isMenace;
 
-    @Override
-    public void setName() {
-        this.livingBeing.setName("ÄvuQo");
+    public AlienBuilder(String id)
+    {
+        this.id = id;
     }
 
-    @Override
-    public void setSpecie() {
-        this.livingBeing.setSpecie("Alien");
+    public AlienBuilder setName(String name)
+    {
+        this.name = name;
+        return this;
     }
 
-    @Override
-    public void setHeight() {
-        this.livingBeing.setHeight(200);
+    public AlienBuilder setPlanet(String planet)
+    {
+        this.planet = planet;
+        return this;
     }
+
+    public AlienBuilder setIsMale(boolean isMale)
+    {
+        this.isMale = isMale;
+        return this;
+    }
+
+    public AlienBuilder setAge(int age)
+    {
+        this.age = age;
+        return this;
+    }
+
+    public AlienBuilder setHeight(float height)
+    {
+        this.heigt = height;
+        return this;
+    }
+
+    public AlienBuilder setIsMenace(boolean isMenace)
+    {
+        this.isMenace = isMenace;
+        return this;
+    }
+
+    public Alien build()
+    {
+        return new Alien(this.id, this.name, this.planet, this.isMale, this.age, this.heigt, this.isMenace);
+    }
+
 }
