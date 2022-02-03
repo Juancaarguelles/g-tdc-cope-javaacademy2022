@@ -2,7 +2,7 @@ package com.models;
 
 import com.interfaces.IFoodCar;
 
-public class HotDogDecorator implements IFoodCar
+public abstract class HotDogDecorator implements IFoodCar
 {
     private IFoodCar foodCar;
 
@@ -11,10 +11,10 @@ public class HotDogDecorator implements IFoodCar
         this.foodCar = foodCar;
     }
 
-    
-
-    @Override
-    public void addItem() {
-
+    public IFoodCar getFoodCar()
+    {
+        return this.foodCar;
     }
+
+
 }
