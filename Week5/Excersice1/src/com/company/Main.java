@@ -14,15 +14,15 @@ public class Main
             x <= 1 ? 1 : x * this.factorial.apply(x - 1);
 
 
-    final BiFunction<Double, Integer, Double>evaluate_e_z = (value, amount)->
+    final BiFunction<Double, Integer, Double> evaluate_e_x = (value, amount)->
     {
       if(amount <= 1)
-          return (double)value + 1;
+          return value + 1;
       else
       {
           double pow = Math.pow(value, amount);
-          double factorial = this.factorial.apply(amount);
-          return (pow / factorial) + this.evaluate_e_z.apply(value, amount - 1);
+          int factorial = this.factorial.apply(amount);
+          return (pow / factorial) + this.evaluate_e_x.apply(value, amount - 1);
       }
     };
 
@@ -40,18 +40,19 @@ public class Main
 
     private void executeOperation()
     {
-        int amount = 0;
+        int testCasesAmount = 0;
         double value = 0;
 
         do {
             System.out.print("::TYPE THE AMOUNT OF TEST CASES  (BETWEEN 1 AND 50) : ");
-            amount = input.nextInt();
+            testCasesAmount = input.nextInt();
 
-            if(amount < 1 || amount > 50)
+            if(testCasesAmount < 1 || testCasesAmount > 50)
                 System.out.println("--PLEASE TYPE A CORRECT VALUE--");
-        }while(amount < 1 || amount > 50);
 
-        for(int i = 0; i < amount; i++)
+        }while(testCasesAmount < 1 || testCasesAmount > 50);
+
+        for(int i = 0; i < testCasesAmount; i++)
         {
             boolean canSetValue = false, canContinue = false;
             String number = "";
@@ -65,7 +66,7 @@ public class Main
                 {
                     value = Double.parseDouble(number);
 
-                    if (value < -20.00 || value > 20.00)
+                    if (value < -20 || value > 20)
                         System.out.println("--PLEASE TYPE A VALUE INSIDE THE RANGE--");
                     else
                         canContinue = true;
@@ -74,8 +75,7 @@ public class Main
                     System.out.println("--PLEASE TYPE A NUMBER WITH 4 DECIMALS--");
             }while(!canContinue);
 
-            DecimalFormat df = new DecimalFormat("#.####");
-            double result = this.evaluate_e_z.apply(value, amount);
+            double result = this.evaluate_e_x.apply(value, 10);
             numbers.add(truncate(result, 4));
         }
 
