@@ -16,8 +16,8 @@ public class Main
 
     final BiFunction<Double, Integer, Double> evaluate_e_x = (value, amount)->
     {
-      if(amount <= 1)
-          return value + 1;
+      if(amount == 0)
+          return (double)1;
       else
       {
           double pow = Math.pow(value, amount);
@@ -75,7 +75,7 @@ public class Main
                     System.out.println("--PLEASE TYPE A NUMBER WITH 4 DECIMALS--");
             }while(!canContinue);
 
-            double result = this.evaluate_e_x.apply(value, 10);
+            double result = this.evaluate_e_x.apply(value, 9);
             numbers.add(truncate(result, 4));
         }
 
