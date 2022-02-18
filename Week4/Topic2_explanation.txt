@@ -1,0 +1,21 @@
+The printer challenge has been sorted out using some of the SOLID principles and Spring
+framework.
+
+I delegate single responsabilites to each class, like the instantiation of objects,
+the handling system of the printer that is gonna be created and printed.
+
+I allow to open the extension of the code in order to add multiple types of printers
+instead of modify thoses classes that already contain the main basic printer info.
+
+I was able to use the Liskov principle when I declared a specific behaviour in
+the main class of the printer and then let the program decide  through one of the inherited
+classes how the previous specific behavour would act
+
+Finally, I used the inversion of dependency which talks about that high level modules should
+not depend on low level modules, instead of that both types of modules should depend just in 
+abstract modules.
+
+Using those principles I could be able to add new types of printers
+avoiding the posibliy of future complications in the code.
+
+By Juan Camilo Argüelles Ardila :)
