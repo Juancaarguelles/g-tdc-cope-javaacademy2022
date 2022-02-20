@@ -2,16 +2,10 @@ package com.company;
 
 import com.company.enums.ModeValue;
 import com.company.exceptions.PasswordException;
-import jdk.swing.interop.SwingInterOpUtils;
-import org.w3c.dom.ls.LSOutput;
+import com.company.interfaces.IPasswordChecker;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
