@@ -24,29 +24,44 @@ public class Main {
         String[] passwords = input.nextLine().toLowerCase().split("\\s+");
         System.out.println(Arrays.toString(passwords));
 
-        /*
-        String logginAttempt = "youtubeholagentahh";
-        String word = "hola";
-        if(logginAttempt.contains(word))
-        {
-            int firstIndex = logginAttempt.indexOf(word.charAt(0));
-            int secondIndex =logginAttempt.indexOf(word.charAt(word.length()-1));
-            System.out.println(logginAttempt.substring(firstIndex, secondIndex + 1));
-        }
-
-         */
 
         System.out.print("Type the logging attempt : ");
         String loggingAttemp = input.next();
 
-        System.out.println(loggingAttemp);
-
-        for(String current : passwords)
+        try
         {
-            System.out.println(current+ " -> "+checkPasswords.test(current, loggingAttemp));
+            System.out.println(firstPasswordChecker.apply(passwords, loggingAttemp));
+        }catch (PasswordException e)
+        {
+            System.out.println(e.getMessage());
         }
+
+        for(String currentPassword : passwords)
+            System.out.println(currentPassword+" -> "+checkPassword.test(currentPassword, loggingAttemp));
+
     }
 
-    public static BiPredicate<String, String> checkPasswords = (password, loggingAttempt)->
+    public static BiPredicate<String, String> checkPassword = (password, loggingAttempt)->
             loggingAttempt.contains(password);
+
+    public static IPasswordChecker<String[], String, Boolean> firstPasswordChecker = (passwords, loggingAttempt)->
+    {
+        if(loggingAttempt.length()<=2000)
+        {
+            for(int i = 0; i < passwords.length; i++)
+            {
+                for(int j = i + 1; j < passwords.length; j++)
+                {
+                    if(passwords[i].equalsIgnoreCase(passwords[j]))
+                        throw new PasswordException("--"+passwords[j]+" IS DUPLICATED--");
+                    if(passwords[j].length()> 10)
+                        throw new PasswordException("--"+passwords[j]+" IS BIGGER THAN 10--");
+                }
+            }
+            return true;
+        }
+        else
+            throw  new PasswordException("--ATTEMPT LOGGING IS BIGGER THAN 2000 CHARACTERS--");
+
+    };
 }
