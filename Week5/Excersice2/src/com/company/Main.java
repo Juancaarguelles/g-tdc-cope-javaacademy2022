@@ -21,6 +21,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
+        /*
         String[] passwords = input.nextLine().toLowerCase().split("\\s+");
         System.out.println(Arrays.toString(passwords));
 
@@ -36,13 +37,57 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        for(String currentPassword : passwords)
-            System.out.println(currentPassword+" -> "+checkPassword.test(currentPassword, loggingAttemp));
+
+        if(checkPassword.test(passwords, loggingAttemp))
+            System.out.println("Show password in correct order");
+        else
+            System.out.println("--INVALID PASSWORD--");
+         */
+
+        List<String>foundedPasswords = new ArrayList<>();
+        String[]passwords = {"hola", "amigos", "de", "gaby"};
+        String loggingAttempt = "amigosholade";
+
+
+        for(String current : passwords)
+        {
+            for(int i = 0;  i < loggingAttempt.length() - current.length() + 1; i++)
+            {
+                String sub = loggingAttempt.substring(i, current.length()+i);
+
+                if(current.equals(sub))
+                {
+                    foundedPasswords.add(sub);
+                    loggingAttempt = loggingAttempt.replace(sub, "");
+                    System.out.println(loggingAttempt);
+                }
+            }
+        }
+        if(!loggingAttempt.equals(""))
+            System.out.println("There is trash in the password");
+        else
+            System.out.println("Password is clean");
+        //foundedPasswords.forEach(System.out::println);
 
     }
 
-    public static BiPredicate<String, String> checkPassword = (password, loggingAttempt)->
-            loggingAttempt.contains(password);
+
+    /*
+    public static BiPredicate<String[], String> checkPassword = (passwords, loggingAttempt)->
+    {
+        for (String current : passwords)
+        {
+            int last = current.length();
+
+            for(int i = 0, bound = loggingAttempt.length(); i < bound; i++)
+            {
+                if(current.equalsIgnoreCase(loggingAttempt.substring(i, last + i)))
+
+            }
+        }
+        return true;
+    };
+     */
 
     public static IPasswordChecker<String[], String, Boolean> firstPasswordChecker = (passwords, loggingAttempt)->
     {
