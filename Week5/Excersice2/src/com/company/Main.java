@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.enums.ModeValue;
 import com.company.exceptions.PasswordException;
 import jdk.swing.interop.SwingInterOpUtils;
 import org.w3c.dom.ls.LSOutput;
@@ -16,38 +17,59 @@ public class Main {
 
     public static final int MIN_BOUND = 1;
     public static final int MAX_BOUND = 10;
+    private static  Scanner input = new Scanner(System.in);
 
 
     public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
-
-        /*
-        String[] passwords = input.nextLine().toLowerCase().split("\\s+");
-        System.out.println(Arrays.toString(passwords));
+        String[]passwords;
 
 
-        System.out.print("Type the logging attempt : ");
-        String loggingAttemp = input.next();
+        int testCasesAmount = getAmount(ModeValue.TEST_CASES_AMOUNT);
+        int counter = 0;
 
-        try
-        {
-            System.out.println(firstPasswordChecker.apply(passwords, loggingAttemp));
-        }catch (PasswordException e)
-        {
-            System.out.println(e.getMessage());
+        do {
+
+            int usersAmount = getAmount(ModeValue.USER_AMOUNT);
+
+            passwords = getPassword(usersAmount);
+
+            System.out.print("::TYPE THE LOGGING ATTEMPT : ");
+            String loggingAttemp = input.next();
+            input.nextLine();
+
+            try {
+                firstPasswordChecker.apply(passwords, loggingAttemp);
+            } catch (PasswordException e) {
+                System.out.println(e.getMessage());
+            }
+
+            System.out.println(checkPassword.apply(passwords, loggingAttemp));
+            counter++;
+        }while (counter < testCasesAmount);
+    }
+
+
+    public static String[]getPassword(int usersAmount)
+    {
+        String[]passwords;
+        do {
+            System.out.print("::TYPE THE PASSWORDS : ");
+            passwords = input.nextLine().toLowerCase().split("\\s+");
+
+            if(passwords.length != usersAmount)
+                System.out.println("--THE USERS PASSWORD AMOUNT IS DIFFERENT TO THE SPECIFIED VALUE--");
         }
+        while (passwords.length != usersAmount);
+        return  passwords;
+    }
 
 
-        if(checkPassword.test(passwords, loggingAttemp))
-            System.out.println("Show password in correct order");
-        else
-            System.out.println("--INVALID PASSWORD--");
-         */
 
-        List<String>foundedPasswords = new ArrayList<>();
-        String[]passwords = {"hola", "amigos", "de", "gaby"};
-        String loggingAttempt = "amigosholade";
-
+    public static BiFunction<String[], String, String> checkPassword = (passwords, loggingAttempt)->
+    {
+        String finalPassword = "";
 
         for(String current : passwords)
         {
@@ -57,37 +79,17 @@ public class Main {
 
                 if(current.equals(sub))
                 {
-                    foundedPasswords.add(sub);
+                    finalPassword += sub+" ";
                     loggingAttempt = loggingAttempt.replace(sub, "");
-                    System.out.println(loggingAttempt);
                 }
             }
         }
         if(!loggingAttempt.equals(""))
-            System.out.println("There is trash in the password");
+            return "--INVALID PASSWORD--";
         else
-            System.out.println("Password is clean");
-        //foundedPasswords.forEach(System.out::println);
-
-    }
-
-
-    /*
-    public static BiPredicate<String[], String> checkPassword = (passwords, loggingAttempt)->
-    {
-        for (String current : passwords)
-        {
-            int last = current.length();
-
-            for(int i = 0, bound = loggingAttempt.length(); i < bound; i++)
-            {
-                if(current.equalsIgnoreCase(loggingAttempt.substring(i, last + i)))
-
-            }
-        }
-        return true;
+            return finalPassword;
     };
-     */
+
 
     public static IPasswordChecker<String[], String, Boolean> firstPasswordChecker = (passwords, loggingAttempt)->
     {
@@ -109,4 +111,24 @@ public class Main {
             throw  new PasswordException("--ATTEMPT LOGGING IS BIGGER THAN 2000 CHARACTERS--");
 
     };
+
+    public static int getAmount(ModeValue mode)
+    {
+        int amount = 0;
+        boolean validFormat = false;
+        do {
+            try {
+                String title = mode == ModeValue.TEST_CASES_AMOUNT ? "TEST CASES" : "USER PASSWORDS";
+                System.out.print("::TYPE THE AMOUNT OF "+ title+" : ");
+                amount = input.nextInt();
+                input.nextLine();
+                validFormat = true;
+            } catch (Exception e) {
+                System.out.println("--TYPE A VALID INTEGER FORMAT--");
+                amount = -1;
+                input.nextLine();
+            }
+        }while (!validFormat);
+        return amount;
+    }
 }
