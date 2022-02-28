@@ -26,7 +26,6 @@ public class Topic2Application
 
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Topic2Application.class, args);
 
-
 		APPLICATION_CONTEXT.getBean(UIMenu.class).showMenu();
 
 		configurableApplicationContext.close();
