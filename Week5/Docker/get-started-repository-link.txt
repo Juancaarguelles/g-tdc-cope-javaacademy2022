@@ -1,3 +1,0 @@
-My repositoryt of get-started in docker can be founded below:
-
-https://hub.docker.com/repository/docker/juancaarguelles/getting-started
