@@ -1,0 +1,10 @@
+Hi Glober!! Here you can find my Docker's repository "juancaarguelles/game_system_db" that contains 
+the database used for this challenge, you don't need to worry about the ddl or dml sentences,
+once you pull this image and run it, all these queries are executed automatically:
+
+https://hub.docker.com/repository/docker/juancaarguelles/game_system_db
+
+In case you need it:
+
+Database_name=game_store_db
+password=
