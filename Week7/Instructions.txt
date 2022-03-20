@@ -1,0 +1,8 @@
+There are the instructions for the test's challenge (It is easy :P):
+
+Just in the IDE's hierarchy look for this path: ("/src/test/java/com.globantBank/").
+Then you will fid just two packages the one whose name is "excersice1.service" has all
+the test of excersice 1 of this challenge, in the same way, the one called "excersice2.service"
+contains all the test related with excersice 2 of the current challenge.
+
+Good Luck :3
