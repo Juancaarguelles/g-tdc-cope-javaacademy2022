@@ -1,14 +1,14 @@
-package com.globantbank.service;
+package com.globantbank.excersice1.service;
 
 import com.globantbank.Exceptions.InsufficientFundsException;
 import com.globantbank.Exceptions.InvalidFundTargetException;
-import com.globantbank.persistence.BankAccountRepository;
-import com.globantbank.persistence.models.AccountType;
-import com.globantbank.persistence.models.Bank;
-import com.globantbank.persistence.models.BankAccount;
-import com.globantbank.persistence.models.OwnerData;
+import com.globantbank.Excersice1.service.BankAccountService;
+import com.globantbank.Excersice1.persistence.BankAccountRepository;
+import com.globantbank.Excersice1.persistence.models.AccountType;
+import com.globantbank.Excersice1.persistence.models.Bank;
+import com.globantbank.Excersice1.persistence.models.BankAccount;
+import com.globantbank.Excersice1.persistence.models.OwnerData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

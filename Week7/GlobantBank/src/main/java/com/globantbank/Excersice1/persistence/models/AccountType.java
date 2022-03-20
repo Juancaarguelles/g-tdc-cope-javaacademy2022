@@ -1,4 +1,4 @@
-package com.globantbank.persistence.models;
+package com.globantbank.Excersice1.persistence.models;
 
 public enum AccountType
 {

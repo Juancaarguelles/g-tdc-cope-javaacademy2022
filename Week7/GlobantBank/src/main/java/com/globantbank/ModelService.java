@@ -1,4 +1,4 @@
-package com.globantbank.service;
+package com.globantbank;
 
 import java.util.List;
 

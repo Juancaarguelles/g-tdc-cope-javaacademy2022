@@ -1,4 +1,4 @@
-package com.globantbank.persistence.models;
+package com.globantbank.Excersice1.persistence.models;
 
 import lombok.Builder;
 import lombok.Data;

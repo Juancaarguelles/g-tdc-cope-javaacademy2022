@@ -1,10 +1,11 @@
-package com.globantbank.service;
+package com.globantbank.Excersice1.service;
 
 import com.globantbank.Exceptions.InsufficientFundsException;
 import com.globantbank.Exceptions.InvalidFundTargetException;
-import com.globantbank.persistence.BankAccountRepository;
-import com.globantbank.persistence.models.AccountType;
-import com.globantbank.persistence.models.BankAccount;
+import com.globantbank.ModelService;
+import com.globantbank.Excersice1.persistence.BankAccountRepository;
+import com.globantbank.Excersice1.persistence.models.AccountType;
+import com.globantbank.Excersice1.persistence.models.BankAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
