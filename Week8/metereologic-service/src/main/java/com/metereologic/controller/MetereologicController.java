@@ -52,4 +52,42 @@ public class MetereologicController
         redirectAttributes.addFlashAttribute("msg", "Location has been added succesfully");
         return "redirect:/locationIndex";
     }
+
+    @GetMapping("/location/edit/{id}")
+    public String showEditForm(@PathVariable Integer id, Model model)
+    {
+        model.addAttribute("location", this.locationService.getById(id));
+        return "create_location";
+    }
+
+    @PostMapping("/location/edit/{id}")
+    public String updateLocation(@PathVariable Integer id, @Validated @ModelAttribute("location")Location location,
+                                 BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model)
+    {
+        Location tempLocation = this.locationService.getById(id);
+
+        if(bindingResult.hasErrors())
+        {
+            model.addAttribute("location", location);
+            return "create_location";
+        }
+
+        tempLocation.setLat(location.getLat());
+        tempLocation.setLon(location.getLon());
+        tempLocation.setCity(location.getCity());
+        tempLocation.setState(location.getState());
+
+        this.locationService.save(tempLocation);
+
+        redirectAttributes.addFlashAttribute("msg", "Location updated successfully");
+        return "redirect:/locationIndex";
+    }
+
+    @PostMapping("/location/delete/{id}")
+    public String deleteLocation(@PathVariable Integer id, RedirectAttributes redirectAttributes)
+    {
+        this.locationService.delete(id);
+        redirectAttributes.addFlashAttribute("msg", "Location has been deleted succesfully");
+        return "redirect:/locationIndex";
+    }
 }

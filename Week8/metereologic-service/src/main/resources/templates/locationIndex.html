@@ -66,6 +66,7 @@
                 <th>Longitud</th>
                 <th>City</th>
                 <th>State</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -74,10 +75,26 @@
                 <td th:text="${location.lon}"></td>
                 <td th:text="${location.city}"></td>
                 <td th:text="${location.state}"></td>
+                <td>
+                    <a th:href="@{/location/edit/{id}(id=${location.id})}" class="btn btn-warning">Edit</a>
+                    <a href="#" onclick="deleteComponent(this)" class="btn btn-danger">Delete</a>
+                    <form th:action="@{/location/delete/{id}(id=${location.id})}" method="post"></form>
+                </td>
             </tr>
             </tbody>
         </table>
 
     </div>
+
+<script>
+    function deleteComponent(component)
+    {
+        let ok = confirm('Do you want to delete this element?');
+
+        if(ok)
+        component.nextElementSibling.submit();
+    }
+</script>
+
 </body>
 </html>

@@ -4,10 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -25,13 +22,20 @@ public class Location
     @Digits(integer = 2, fraction = 4, message = "Degrees can have 2 values, after that you can type just 4 values")
     private BigDecimal lon;
 
-    @NotNull(message = "Enter a city please")
+    @NotNull(message = "City cannot be null")
+    @NotEmpty(message = "City cannot be empty")
+    @NotBlank(message = "Are you serious?")
     @Column(nullable = false)
     private String city;
 
-    @NotNull(message = "Enter a state please")
+    @NotNull( message = "State cannot be null")
+    @NotEmpty(message = "State cannot be empty")
+    @NotBlank(message = "Are you serious?")
     @Column(nullable = false)
     private String state;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "location")
+    private MetereologicalData metereologicalData;
 
 
 
