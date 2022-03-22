@@ -1,0 +1,5 @@
+In order to start the app UI just type this in your browser:
+
+http://localhost:8080/index
+
+As simple as that :P

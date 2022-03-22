@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.function.BiFunction;
 
 
 @Entity
@@ -29,15 +30,36 @@ public class MetereologicalData
     @Digits(integer = 3, fraction = 1, message = "Just one decimal allowed")
     private BigDecimal temperature;
 
-    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true)
-    @JoinColumn(name = "location_id")
-    private Location location;
-    private Integer locId;
+    @NotNull(message = "Latitud cannot be null")
+    @Digits(integer = 2, fraction = 4, message = "Degrees can have 2 values, after that you can type just 4 values")
+    private BigDecimal lat;
 
-    public MetereologicalData(LocalDate registryDate, BigDecimal temperature)
+    @NotNull(message = "longitud cannot be null")
+    @Digits(integer = 2, fraction = 4, message = "Degrees can have 2 values, after that you can type just 4 values")
+    private BigDecimal lon;
+
+    @NotNull(message = "City cannot be null")
+    @NotEmpty(message = "City cannot be empty")
+    @NotBlank(message = "Are you serious?")
+    @Column(nullable = false)
+    private String city;
+
+    @NotNull( message = "State cannot be null")
+    @NotEmpty(message = "State cannot be empty")
+    @NotBlank(message = "Are you serious?")
+    @Column(nullable = false)
+    private String state;
+
+
+    public MetereologicalData(LocalDate registryDate, BigDecimal temperature, BigDecimal lat, BigDecimal lon,
+                              String city, String state)
     {
         this.registryDate = registryDate;
         this.temperature = temperature;
+        this.lat = lat;
+        this.lon = lon;
+        this.city = city;
+        this.state = state;
     }
 
     public MetereologicalData(){}
@@ -69,24 +91,44 @@ public class MetereologicalData
         this.temperature = temperature;
     }
 
-    public Location getLocation()
+    public BigDecimal getLat()
     {
-        return this.location;
+        return this.lat;
     }
 
-    public void setLocation(Location location)
+    public void setLat(BigDecimal lat)
     {
-        this.location = location;
+        this.lat = lat;
     }
 
-    public Integer getLocId()
+    public BigDecimal getLon()
     {
-        return this.locId;
+        return this.lon;
     }
 
-    public void setLocId(Integer locId)
+    public void setLon(BigDecimal lon)
     {
-        this.locId = locId;
+        this.lon = lon;
+    }
+
+    public String getState()
+    {
+        return this.state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public String getCity()
+    {
+        return this.city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
     }
 
     @Override
@@ -95,6 +137,9 @@ public class MetereologicalData
         return "ID : "+this.id+"\n"+
                 "REGISTRY DATE : "+this.registryDate+"\n"+
                 "TEMPERATURE : "+this.temperature+"\n"+
-                "LOCATION : "+this.location;
+                "LATIUDE : "+this.lat+"\n"+
+                "LONGITUDE : "+this.lon+"\n"+
+                "CITY : "+this.city+"\n"+
+                "STATE : "+this.state;
     }
 }
