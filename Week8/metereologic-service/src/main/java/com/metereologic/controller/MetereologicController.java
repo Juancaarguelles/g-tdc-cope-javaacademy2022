@@ -25,10 +25,17 @@ public class MetereologicController
     private LocationService locationService;
 
     @GetMapping("/locationIndex")
-    public String show(Model model)
+    public String showLocations(Model model)
     {
         model.addAttribute("locations", this.locationService.listAll());
         return "locationIndex";
+    }
+
+    @GetMapping("/index")
+    public String showMetereologicalData(Model model)
+    {
+        model.addAttribute("datas", this.metereologicalDataService.listAll());
+        return "index";
     }
 
     @GetMapping("/location/create")
@@ -37,6 +44,7 @@ public class MetereologicController
         model.addAttribute("location", new Location());
         return "create_location";
     }
+
 
     @PostMapping("/location/create")
     public String createNewLocation(@Validated @ModelAttribute("location") Location location, BindingResult bindingResult,
@@ -51,6 +59,30 @@ public class MetereologicController
         this.locationService.save(location);
         redirectAttributes.addFlashAttribute("msg", "Location has been added succesfully");
         return "redirect:/locationIndex";
+    }
+
+    @GetMapping("/create")
+    public String showCreateForm(Model model)
+    {
+        model.addAttribute("data", new MetereologicalData());
+        model.addAttribute("locations", this.locationService.listAll());
+        return "create";
+    }
+
+    @PostMapping("/create")
+    public String createMetereologicalData(@Validated @ModelAttribute("data") MetereologicalData metereologicalData,
+                                           BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("data", metereologicalData);
+            model.addAttribute("locations", this.locationService.listAll());
+            return "create";
+        }
+        System.out.println("The id is : "+metereologicalData.getLocId());
+        metereologicalData.setLocation(this.locationService.getById(metereologicalData.getLocId()));
+        //System.out.println(metereologicalData);
+        this.metereologicalDataService.save(metereologicalData);
+        redirectAttributes.addFlashAttribute("msg", "Metereological data added succesfully");
+        return "redirect:/index";
     }
 
     @GetMapping("/location/edit/{id}")

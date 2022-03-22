@@ -34,9 +34,8 @@ public class Location
     @Column(nullable = false)
     private String state;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "location")
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY,orphanRemoval = true, mappedBy = "location")
     private MetereologicalData metereologicalData;
-
 
 
     public Location(BigDecimal lat, BigDecimal lon, String city, String state)

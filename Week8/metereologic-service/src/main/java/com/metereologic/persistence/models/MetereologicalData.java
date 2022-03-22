@@ -5,8 +5,11 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
@@ -22,14 +25,19 @@ public class MetereologicalData
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate registryDate;
 
+    @NotNull(message = "Temperature cannot be null")
+    @Digits(integer = 3, fraction = 1, message = "Just one decimal allowed")
+    private BigDecimal temperature;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "location_id")
     private Location location;
+    private Integer locId;
 
-    public MetereologicalData(LocalDate registryDate)
+    public MetereologicalData(LocalDate registryDate, BigDecimal temperature)
     {
         this.registryDate = registryDate;
+        this.temperature = temperature;
     }
 
     public MetereologicalData(){}
@@ -51,6 +59,16 @@ public class MetereologicalData
         this.registryDate = registryDate;
     }
 
+    public BigDecimal getTemperature()
+    {
+        return this.temperature;
+    }
+
+    public void setTemperature(BigDecimal temperature)
+    {
+        this.temperature = temperature;
+    }
+
     public Location getLocation()
     {
         return this.location;
@@ -61,11 +79,22 @@ public class MetereologicalData
         this.location = location;
     }
 
+    public Integer getLocId()
+    {
+        return this.locId;
+    }
+
+    public void setLocId(Integer locId)
+    {
+        this.locId = locId;
+    }
+
     @Override
     public String toString()
     {
         return "ID : "+this.id+"\n"+
                 "REGISTRY DATE : "+this.registryDate+"\n"+
+                "TEMPERATURE : "+this.temperature+"\n"+
                 "LOCATION : "+this.location;
     }
 }
