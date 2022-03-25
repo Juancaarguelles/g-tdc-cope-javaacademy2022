@@ -1,5 +1,7 @@
 package com.thesis.services;
 
+import com.thesis.exceptions.InvalidCredentialsException;
+import com.thesis.exceptions.UserNotFound;
 import com.thesis.exceptions.UserNotRegisteredException;
 import com.thesis.persistence.model.User;
 import com.thesis.persistence.repository.IUserRepository;
@@ -32,6 +34,10 @@ class UserServiceTest
                 Arrays.asList(new User(987665, "monica","1234","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja"))
         );
         Mockito.when(userRepository.save(Mockito.any())).thenReturn(null);
+        Mockito.when(userRepository.findByUserNameAndPassword(Mockito.any(), Mockito.any())).
+                thenReturn(Arrays.asList());
+
+        Mockito.when(userRepository.findByUserName(Mockito.any())).thenReturn(Arrays.asList());
     }
 
 
@@ -48,6 +54,20 @@ class UserServiceTest
                 new User(987, "moca", "12","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja")
         ));
         Assertions.assertEquals(UserService.USER_REGISTERED_EXCEPTION, ex.getMessage());
+    }
+
+    @Test
+    public void fail_if_cannot_log_in()
+    {
+        Exception ex = Assertions.assertThrows(InvalidCredentialsException.class,()-> this.userService.loggedIn("monica", "123"));
+        Assertions.assertEquals(userService.INVALID_CREDENTIALS_EXCEPTION, ex.getMessage());
+    }
+
+    @Test
+    public void fail_if_cannot_log_out()
+    {
+        Exception ex = Assertions.assertThrows(UserNotFound.class, ()-> this.userService.logout("juanca"));
+        Assertions.assertEquals(UserService.USER_NOT_FOUND_EXCEPTION, ex.getMessage());
     }
 
 

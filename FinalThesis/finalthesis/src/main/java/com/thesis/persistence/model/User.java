@@ -141,17 +141,15 @@ public class User
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
-                ", active='" + active + '\'' +
-                '}';
+        return "ID : "+id+"\n"+
+                "USERNAME : "+userName+"\n"+
+                "NAME : "+name+"\n"+
+                "LAST NAME : "+lastName+"\n"+
+                "ADDRESS : "+address+"\n"+
+                "ZIP CODE : "+zipCode+"\n"+
+                "STATE : "+state+"\n"+
+                "COUNTRY : "+country+"\n"+
+                "ACTIVE : "+active;
     }
 
     @Override

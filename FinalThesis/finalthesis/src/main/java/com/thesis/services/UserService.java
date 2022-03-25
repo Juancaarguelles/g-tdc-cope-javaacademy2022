@@ -16,7 +16,7 @@ import java.util.Optional;
 public class UserService implements ModelService<User> {
     public static final String USER_REGISTERED_EXCEPTION = "--USER IS REGISTERED ALREADY--";
     public static final String INVALID_CREDENTIALS_EXCEPTION = "--INVALID CREDENTIALS--";
-    public static final String USER_NOT_FOUNDED_EXCEPTION = "--USER NOT FOUND--";
+    public static final String USER_NOT_FOUND_EXCEPTION = "--USER NOT FOUND--";
     public static final String USER_NOT_LOGGED_IN_EXCEPTION = "--USER HAS NOT LOGGED IN--";
     public static final String USER_LOGGED_IN_EXCEPTION = "--USER IS LOGGED IN--";
 
@@ -70,7 +70,7 @@ public class UserService implements ModelService<User> {
             User userTemp = user.get();
             if(userTemp.isActive())
                 throw new UserSessionException(USER_LOGGED_IN_EXCEPTION);
-            
+
             userTemp.setActive(true);
             return this.userRepository.save(userTemp);
         }
@@ -82,7 +82,7 @@ public class UserService implements ModelService<User> {
         Optional<User>user = this.userRepository.findByUserName(username).stream().findFirst();
 
         if(user.isEmpty())
-            throw new UserNotFound(USER_NOT_FOUNDED_EXCEPTION);
+            throw new UserNotFound(USER_NOT_FOUND_EXCEPTION);
         else
         {
             User userTemp = user.get();
