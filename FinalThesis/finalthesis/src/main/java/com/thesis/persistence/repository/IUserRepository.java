@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Integer> {
    List<User> findByIdentificationOrUserName(int id, String username);
+   List<User>findByUserNameAndPassword(String userName, String password);
+   List<User>findByUserName(String username);
 }

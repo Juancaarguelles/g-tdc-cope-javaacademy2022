@@ -13,6 +13,8 @@ public class User
     @Column(nullable = false, unique = true)
     private String userName;
     @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String lastName;
@@ -27,9 +29,10 @@ public class User
     @Column(nullable = false)
     private boolean active;
 
-    public User(int identification, String userName, String name, String lastName, String address, String zipCode, String state, String country) {
+    public User(int identification, String userName, String password, String name, String lastName, String address, String zipCode, String state, String country) {
         this.identification = identification;
         this.userName = userName;
+        this.password = password;
         this.name = name;
         this.lastName = lastName;
         this.address = address;
@@ -43,6 +46,22 @@ public class User
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setIdentification(int identification) {
+        this.identification = identification;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setIdentication(int identification)
@@ -146,6 +165,7 @@ public class User
         if (active != user.active) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (address != null ? !address.equals(user.address) : user.address != null) return false;
@@ -159,6 +179,7 @@ public class User
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + identification;
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);

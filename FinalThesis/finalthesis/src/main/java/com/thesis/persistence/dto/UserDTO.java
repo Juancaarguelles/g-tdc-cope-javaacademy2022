@@ -8,17 +8,27 @@ public class UserDTO
     private String lastName;
     private String state;
     private String country;
+    private boolean active;
 
-    public UserDTO(int identification, String userName, String name, String lastName, String state, String city) {
+    public UserDTO(int identification, String userName, String name, String lastName, String state, String country, boolean active) {
         this.identification = identification;
         this.userName = userName;
         this.name = name;
         this.lastName = lastName;
         this.state = state;
-        this.country = city;
+        this.country = country;
+        this.active = active;
     }
 
     public UserDTO(){}
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public int getIdentification() {
         return identification;
@@ -72,13 +82,12 @@ public class UserDTO
     @Override
     public String toString() {
 
-        return "UserDTO{" +
-                "identification=" + identification +
-                ", userName='" + userName + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", state='" + state + '\'' +
-                ", city='" + country + '\'' +
-                '}';
+        return "IDENTIFICATION : "+identification+"\n"+
+                "USERNAME : "+userName+"\n"+
+                "NAME : "+name+"\n"+
+                "LAST NAME : "+lastName+"\n"+
+                "STATE : "+state+"\n"+
+                "COUNTRY : "+country+"\n"+
+                "ACTIVE : "+active;
     }
 }

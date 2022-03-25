@@ -29,7 +29,7 @@ class UserServiceTest
         MockitoAnnotations.openMocks(this);
         Mockito.when(userRepository.findAll()).thenReturn(getUsers());
         Mockito.when(userRepository.findByIdentificationOrUserName(Mockito.anyInt(), Mockito.any())).thenReturn(
-                Arrays.asList(new User(987665, "monica","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja"))
+                Arrays.asList(new User(987665, "monica","1234","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja"))
         );
         Mockito.when(userRepository.save(Mockito.any())).thenReturn(null);
     }
@@ -45,7 +45,7 @@ class UserServiceTest
     public void fails_if_user_could_not_be_registered()
     {
         Exception ex = Assertions.assertThrows(UserNotRegisteredException.class, ()-> this.userService.couldRegisterUser(
-                new User(987, "moca","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja")
+                new User(987, "moca", "12","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja")
         ));
         Assertions.assertEquals(UserService.USER_REGISTERED_EXCEPTION, ex.getMessage());
     }
@@ -53,10 +53,10 @@ class UserServiceTest
 
     public List<User>getUsers()
     {
-        User user1 = new User(1003456, "juanca","Juan Camilo", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
-        User user2 = new User(12345,"juanda","Juan David", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
-        User user3 = new User(2345,"will","William", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
-        User user4 = new User(987665, "monica","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user1 = new User(1003456, "juanca","12","Juan Camilo", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user2 = new User(12345,"juanda", "12","Juan David", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user3 = new User(2345,"will", "12","William", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user4 = new User(987665, "monica", "12","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
 
         return new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
     }

@@ -22,7 +22,7 @@ public class UserController
     public List<UserDTO>listAll()
     {
         return this.userService.findAll().stream().map(x -> new UserDTO(x.getId(), x.getUserName(),x.getName(),
-                x.getLastName(), x.getState(), x.getCountry())).collect(Collectors.toList());
+                x.getLastName(), x.getState(), x.getCountry(), x.isActive())).collect(Collectors.toList());
     }
 
     @PostMapping("/test-add")

@@ -1,5 +1,6 @@
 package com.thesis.controller;
 
+import com.thesis.persistence.dto.UserDTO;
 import com.thesis.persistence.model.User;
 import com.thesis.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,35 @@ public class AdminUserController
         }catch (Exception e)
         {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/login/{userName}/{password}")
+    public ResponseEntity<?>login(@PathVariable String userName,@PathVariable String password)
+    {
+        try
+        {
+            User user = this.userService.loggedIn(userName, password);
+            UserDTO userDTO = new UserDTO(user.getIdentification(), user.getUserName(),
+                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive());
+            return new ResponseEntity<>("Logged in"+userDTO, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/logout/{username}")
+    public ResponseEntity<?>logout(@PathVariable String username)
+    {
+        try{
+            User user = this.userService.logout(username);
+            UserDTO userDTO = new UserDTO(user.getIdentification(), user.getUserName(),
+                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive());
+            return new ResponseEntity<>("Logged out"+userDTO, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
