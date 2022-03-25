@@ -1,6 +1,8 @@
 package com.thesis.persistence.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User
@@ -28,6 +30,9 @@ public class User
     private String country;
     @Column(nullable = false)
     private boolean active;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_messages", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
+    private Set<Message> allMessages = new HashSet<>();
 
     public User(int identification, String userName, String password, String name, String lastName, String address, String zipCode, String state, String country) {
         this.identification = identification;
@@ -39,10 +44,15 @@ public class User
         this.zipCode = zipCode;
         this.state = state;
         this.country = country;
-        this.active = false;
+        this.active = true;
     }
 
     public User(){}
+
+    public void addMessage(Message message)
+    {
+        this.allMessages.add(message);
+    }
 
     public Integer getId() {
         return id;
@@ -139,6 +149,14 @@ public class User
         this.country = country;
     }
 
+    public Set<Message> getAllMessages() {
+        return allMessages;
+    }
+
+    public void setAllMessages(Set<Message> allMessages) {
+        this.allMessages = allMessages;
+    }
+
     @Override
     public String toString() {
         return "ID : "+id+"\n"+
@@ -149,7 +167,8 @@ public class User
                 "ZIP CODE : "+zipCode+"\n"+
                 "STATE : "+state+"\n"+
                 "COUNTRY : "+country+"\n"+
-                "ACTIVE : "+active;
+                "ACTIVE : "+active+"\n"+
+                "MESSAGES : "+this.allMessages;
     }
 
     @Override
@@ -169,7 +188,8 @@ public class User
         if (address != null ? !address.equals(user.address) : user.address != null) return false;
         if (zipCode != null ? !zipCode.equals(user.zipCode) : user.zipCode != null) return false;
         if (state != null ? !state.equals(user.state) : user.state != null) return false;
-        return country != null ? country.equals(user.country) : user.country == null;
+        if (country != null ? !country.equals(user.country) : user.country != null) return false;
+        return allMessages != null ? allMessages.equals(user.allMessages) : user.allMessages == null;
     }
 
     @Override
@@ -185,6 +205,7 @@ public class User
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (allMessages != null ? allMessages.hashCode() : 0);
         return result;
     }
 }

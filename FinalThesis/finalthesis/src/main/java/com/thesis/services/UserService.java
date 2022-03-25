@@ -1,16 +1,24 @@
 package com.thesis.services;
 
 import com.thesis.exceptions.InvalidCredentialsException;
-import com.thesis.exceptions.UserNotFound;
+import com.thesis.exceptions.UserNotFoundException;
 import com.thesis.exceptions.UserNotRegisteredException;
 import com.thesis.exceptions.UserSessionException;
+import com.thesis.persistence.model.Message;
 import com.thesis.persistence.model.User;
 import com.thesis.persistence.repository.IUserRepository;
+import com.thesis.utils.EmailVisibility;
+import com.thesis.utils.StringConversor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
+import java.beans.Visibility;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserService implements ModelService<User> {
@@ -22,6 +30,8 @@ public class UserService implements ModelService<User> {
 
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public List<User> findAll() {
@@ -77,12 +87,17 @@ public class UserService implements ModelService<User> {
         throw new InvalidCredentialsException(INVALID_CREDENTIALS_EXCEPTION);
     }
 
+    public Optional<User> findByUsername(String username)
+    {
+        return this.userRepository.findByUserName(username).stream().findFirst();
+    }
+
     public User logout(String username) throws Exception
     {
-        Optional<User>user = this.userRepository.findByUserName(username).stream().findFirst();
+        Optional<User> user = findByUsername(username);
 
         if(user.isEmpty())
-            throw new UserNotFound(USER_NOT_FOUND_EXCEPTION);
+            throw new UserNotFoundException(USER_NOT_FOUND_EXCEPTION);
         else
         {
             User userTemp = user.get();
@@ -92,6 +107,58 @@ public class UserService implements ModelService<User> {
             userTemp.setActive(false);
             return this.userRepository.save(userTemp);
         }
+    }
+
+    public void setDestinationAndCCOfMessage(String[]destinations, Message message, EmailVisibility visibility)
+    {
+        Message tempMessage = new Message(message);
+        if(visibility == EmailVisibility.HIDDEN)
+        tempMessage.setBcc("");
+        else
+            System.out.println(message.getBcc());
+
+        Stream.of(destinations).forEach(userName ->{
+
+            Optional<User>userTemp = this.findByUsername(userName);
+
+            if(userTemp.isPresent() && userTemp.get().isActive()) {
+                userTemp.get().addMessage(tempMessage);
+                this.userRepository.save(userTemp.get());
+            }
+        });
+    }
+
+
+    public boolean sendMessage(String username, Message message) throws Exception
+    {
+        Optional<User>user = this.findByUsername(username);
+
+        if(!user.isEmpty())
+        {
+            if(user.get().isActive())
+            {
+                message.setOrigin(user.get().getUserName());
+                user.get().addMessage(message);
+                this.userRepository.save(user.get());
+
+                String[]bcc = message.getBcc().split("[\\s,]+");
+                this.setDestinationAndCCOfMessage(bcc, message, EmailVisibility.VISIBLE);
+
+                String[]destinations = message.getDestination().split("[\\s,]+");
+                //this.setDestinationAndCCOfMessage(destinations,message, EmailVisibility.HIDDEN);
+                String[]cc = message.getCc().split("[\\s,]+");
+                String[]destinationsCC = Stream.concat(Arrays.stream(destinations), Arrays.stream(cc)).
+                        toArray(String[]::new);
+                this.setDestinationAndCCOfMessage(destinationsCC, message, EmailVisibility.HIDDEN);
+
+                return true;
+            }
+            else
+            {
+                throw new UserSessionException(USER_NOT_LOGGED_IN_EXCEPTION);
+            }
+        }
+        throw new UserNotFoundException(USER_NOT_FOUND_EXCEPTION);
     }
 
 }

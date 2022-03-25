@@ -1,6 +1,7 @@
-package com.thesis.controller;
+package com.thesis.controller.user;
 
 import com.thesis.persistence.dto.UserDTO;
+import com.thesis.persistence.model.Message;
 import com.thesis.persistence.model.User;
 import com.thesis.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,19 @@ public class AdminUserController
         }catch (Exception e)
         {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/send-message/{username}")
+    public ResponseEntity<?>sendMessage(@PathVariable String username,  @RequestBody Message message)
+    {
+        try
+        {
+            this.userService.sendMessage(username, message);
+            return new ResponseEntity<>("Message sended : "+message, HttpStatus.OK);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

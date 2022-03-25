@@ -1,4 +1,4 @@
-package com.thesis.controller;
+package com.thesis.controller.user;
 
 import com.thesis.persistence.dto.UserDTO;
 import com.thesis.persistence.model.User;

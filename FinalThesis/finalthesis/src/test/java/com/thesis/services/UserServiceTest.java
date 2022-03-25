@@ -1,7 +1,7 @@
 package com.thesis.services;
 
 import com.thesis.exceptions.InvalidCredentialsException;
-import com.thesis.exceptions.UserNotFound;
+import com.thesis.exceptions.UserNotFoundException;
 import com.thesis.exceptions.UserNotRegisteredException;
 import com.thesis.persistence.model.User;
 import com.thesis.persistence.repository.IUserRepository;
@@ -66,7 +66,7 @@ class UserServiceTest
     @Test
     public void fail_if_cannot_log_out()
     {
-        Exception ex = Assertions.assertThrows(UserNotFound.class, ()-> this.userService.logout("juanca"));
+        Exception ex = Assertions.assertThrows(UserNotFoundException.class, ()-> this.userService.logout("juanca"));
         Assertions.assertEquals(UserService.USER_NOT_FOUND_EXCEPTION, ex.getMessage());
     }
 
