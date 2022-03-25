@@ -51,7 +51,7 @@ Here you will find all my solutions to the challenges.
 
 ## Week 9 (FINAL THESIS)
 - finalthesis
-- Instructions.txt (instructions of how to set up the endpoints)
+- final-thesis-instructions.txt (instructions of how to set up the endpoints)
 
 
 MIT
