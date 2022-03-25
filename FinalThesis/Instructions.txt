@@ -1,0 +1,155 @@
+Sooo, here we are! In the final thesis :3
+
+
+The context of this project tries to simulate a communication system between employees (More info
+is available at the end of globant's course):
+
+How to try this project? Well you could use postman (I had tested this project on it XD)
+
+These is the deal, I'm gonna provide you the endpoints with their uses
+
+
+
+--ADMIN_USER--
+
+list all (GET) : http://localhost:8080/admin-users/
+
+Add user (POST) : http://localhost:8080/admin-users/test-add  
+(You must provide user's body in json format,this endpoint is recommended for testing only)
+{
+        "identification": int,
+        "userName": "text",
+        "password": "text",
+        "name": "text",
+        "lastName": "text",
+        "address": "text",
+        "zipCode": "text",
+        "state": "text",
+        "country": "text"
+}
+
+Check user registered (GET) : http://localhost:8080/admin-users/test-check/{identification}/{username}
+({identification} refers to user's identification and {username} means the user's username)
+
+Register user (POST) : http://localhost:8080/admin-users/register
+(You must provide user's body in json format)
+{
+        "identification": int,
+        "userName": "text",
+        "password": "text",
+        "name": "text",
+        "lastName": "text",
+        "address": "text",
+        "zipCode": "text",
+        "state": "text",
+        "country": "text"
+}
+
+Log In (GET) : http://localhost:8080/admin-users/login/{username}/{password}
+({username} refers to user's username and {password} means the user's password)
+
+Log Out (GET) : http://localhost:8080/admin-users/logout/{username}
+({username} refers to user's username)
+
+Send Message (POST) : http://localhost:8080/admin-users/send-message/{username}
+(You must provide message's body in json format)
+NOTE : Multiple usernames in 'destination','cc','bcc' must be separated by commas,
+EXAMPLE {"destination" : "ironman, spiderman, hulk"}
+{
+        "destination": "text",
+        "cc": "text",
+        "bcc": "text",
+        "subject": "text",
+        "body": "text",
+        "attachment": "text"
+}
+
+
+--USER--
+
+list all (GET) : http://localhost:8080/users/
+
+Add user (POST) : http://localhost:8080/users/test-add
+(You must provide user's body in json format,this endpoint is recommended for testing only)
+{
+        "identification": int,
+        "userName": "text",
+        "password": "text",
+        "name": "text",
+        "lastName": "text",
+        "address": "text",
+        "zipCode": "text",
+        "state": "text",
+        "country": "text"
+}
+
+Get pageable users	 (GET) : http://localhost:8080/users/find-sort?sortBy=identification&page=0
+({identification} refers to user's identification and {page} means the page of view)
+
+Register user (POST) : http://localhost:8080/admin-users/register
+(You must provide user's body in json format)
+{
+        "identification": int,
+        "userName": "text",
+        "password": "text",
+        "name": "text",
+        "lastName": "text",
+        "address": "text",
+        "zipCode": "text",
+        "state": "text",
+        "country": "text"
+}
+
+Log In (GET) : http://localhost:8080/users/login/{username}/{password}
+({username} refers to user's username and {password} means the user's password)
+
+Log Out (GET) : http://localhost:8080/users/logout/{username}
+({username} refers to user's username)
+
+Send Message (POST) : http://localhost:8080/users/send-message/{username}
+(You must provide message's body in json format)
+NOTE : Multiple usernames in 'destination','cc','bcc' must be separated by commas,
+EXAMPLE {"destination" : "ironman, spiderman, hulk"}
+{
+        "destination": "text",
+        "cc": "text",
+        "bcc": "text",
+        "subject": "text",
+        "body": "text",
+        "attachment": "text"
+}
+
+--MESSAGES--
+
+list all (GET) : http://localhost:8080/admin-messages/
+
+Add user (POST) : http://localhost:8080/users/test-add
+(You must provide user's body in json format,this endpoint is recommended for testing only)
+{
+        "identification": int,
+        "userName": "text",
+        "password": "text",
+        "name": "text",
+        "lastName": "text",
+        "address": "text",
+        "zipCode": "text",
+        "state": "text",
+        "country": "text"
+}
+
+Get pageable users	 (GET) : http://localhost:8080/admin-messages/find-sort?sortBy=identification&page=0
+({identification} refers to user's identification and {page} means the page of view)
+
+Register user (POST) : http://localhost:8080/admin-users/register
+(You must provide user's body in json format)
+{
+        "identification": int,
+        "userName": "text",
+        "password": "text",
+        "name": "text",
+        "lastName": "text",
+        "address": "text",
+        "zipCode": "text",
+        "state": "text",
+        "country": "text"
+}
