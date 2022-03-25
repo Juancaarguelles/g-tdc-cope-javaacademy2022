@@ -42,8 +42,9 @@ class UserServiceTest
 
         Mockito.when(userRepository.findByUserName(Mockito.any())).thenReturn(Arrays.asList(
                 new User(987665, "monica","1234","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja"))
-
         );
+
+
     }
 
 

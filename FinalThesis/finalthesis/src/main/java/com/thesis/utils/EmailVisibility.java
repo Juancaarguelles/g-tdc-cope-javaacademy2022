@@ -2,5 +2,5 @@ package com.thesis.utils;
 
 public enum EmailVisibility
 {
-    VISIBLE, HIDDEN
+    DEFAULT_CC, BCC
 }

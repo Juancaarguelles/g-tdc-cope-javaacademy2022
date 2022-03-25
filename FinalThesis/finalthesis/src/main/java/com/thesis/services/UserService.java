@@ -50,12 +50,12 @@ public class UserService implements ModelService<User> {
     }
 
 
-    public boolean isRegistered(Integer id, String username) // throws Exception
+    public boolean isRegistered(Integer id, String username)
     {
         Optional<User> user = this.userRepository.findByIdentificationOrUserName(id, username).stream().findFirst();
         if (!user.isPresent())
             return false;
-        //throw new UserNotRegisteredException(NOT_REGISTERED_EXCEPTION);
+
         return true;
     }
 
@@ -105,11 +105,11 @@ public class UserService implements ModelService<User> {
         }
     }
 
-    public void setDestinationAndCCOfMessage(String[]destinations, Message message, EmailVisibility visibility)
+    public void setEmailTarget(String[]destinations, Message message, EmailVisibility visibility)
     {
         Message tempMessage = new Message(message);
 
-        if(visibility == EmailVisibility.HIDDEN)
+        if(visibility == EmailVisibility.DEFAULT_CC)
         tempMessage.setBcc("");
 
         Stream.of(destinations).forEach(userName ->{
@@ -139,14 +139,14 @@ public class UserService implements ModelService<User> {
                 this.userRepository.save(user.get());
 
                 String[]bcc = message.getBcc().split("[\\s,]+");
-                this.setDestinationAndCCOfMessage(bcc, message, EmailVisibility.VISIBLE);
+                this.setEmailTarget(bcc, message, EmailVisibility.BCC);
 
                 String[]destinations = message.getDestination().split("[\\s,]+");
                 //this.setDestinationAndCCOfMessage(destinations,message, EmailVisibility.HIDDEN);
                 String[]cc = message.getCc().split("[\\s,]+");
                 String[]destinationsCC = Stream.concat(Arrays.stream(destinations), Arrays.stream(cc)).
                         toArray(String[]::new);
-                this.setDestinationAndCCOfMessage(destinationsCC, message, EmailVisibility.HIDDEN);
+                this.setEmailTarget(destinationsCC, message, EmailVisibility.DEFAULT_CC);
 
                 return true;
             }
