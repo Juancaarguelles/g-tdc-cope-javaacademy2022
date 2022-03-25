@@ -1,5 +1,6 @@
 package com.thesis.controller.user;
 
+import com.thesis.persistence.dto.MessageDTO;
 import com.thesis.persistence.dto.UserDTO;
 import com.thesis.persistence.model.User;
 import com.thesis.services.UserService;
@@ -22,7 +23,12 @@ public class UserController
     public List<UserDTO>listAll()
     {
         return this.userService.findAll().stream().map(x -> new UserDTO(x.getId(), x.getUserName(),x.getName(),
-                x.getLastName(), x.getState(), x.getCountry(), x.isActive(), x.getAllMessages(), x.getSentMessages(),x.getReceivedMessages())).collect(Collectors.toList());
+                x.getLastName(), x.getState(), x.getCountry(), x.isActive(),
+                x.getAllMessages().stream().map(y -> new MessageDTO(y.getOrigin(),y.getDestination(),y.getCc(), y.getBcc(), y.getSubject(), y.getBody(), y.getAttachment())).collect(Collectors.toSet()),
+                x.getSentMessages().stream().map(z -> new MessageDTO(z.getOrigin(),z.getDestination(),z.getCc(), z.getBcc(), z.getSubject(), z.getBody(), z.getAttachment())).collect(Collectors.toSet()),
+                x.getReceivedMessages().stream().map(q -> new MessageDTO(q.getOrigin(),q.getDestination(),q.getCc(), q.getBcc(), q.getSubject(), q.getBody(), q.getAttachment())).collect(Collectors.toSet())
+                ))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/test-add")

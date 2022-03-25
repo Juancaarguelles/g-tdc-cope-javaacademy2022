@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin-users")
@@ -46,8 +47,10 @@ public class AdminUserController
         {
             User user = this.userService.loggedIn(userName, password);
             UserDTO userDTO = new UserDTO(user.getIdentification(), user.getUserName(),
-                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive(), user.getAllMessages(),
-                    user.getSentMessages(), user.getReceivedMessages());
+                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive(),
+                    user.getAllMessages().stream().map(x -> new MessageDTO(x.getOrigin(),x.getDestination(),x.getCc(), x.getBcc(), x.getSubject(), x.getBody(), x.getAttachment())).collect(Collectors.toSet()),
+                    user.getSentMessages().stream().map(x -> new MessageDTO(x.getOrigin(),x.getDestination(),x.getCc(), x.getBcc(), x.getSubject(), x.getBody(), x.getAttachment())).collect(Collectors.toSet()),
+                    user.getReceivedMessages().stream().map(x -> new MessageDTO(x.getOrigin(),x.getDestination(),x.getCc(), x.getBcc(), x.getSubject(), x.getBody(), x.getAttachment())).collect(Collectors.toSet()));
             return new ResponseEntity<>("Logged in"+userDTO, HttpStatus.OK);
         }catch (Exception e)
         {
@@ -62,7 +65,9 @@ public class AdminUserController
             User user = this.userService.logout(username);
             UserDTO userDTO = new UserDTO(user.getIdentification(), user.getUserName(),
                     user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive(),
-                    user.getAllMessages(), user.getSentMessages(), user.getReceivedMessages());
+                    user.getAllMessages().stream().map(x -> new MessageDTO(x.getOrigin(),x.getDestination(),x.getCc(), x.getBcc(), x.getSubject(), x.getBody(), x.getAttachment())).collect(Collectors.toSet()),
+                    user.getSentMessages().stream().map(x -> new MessageDTO(x.getOrigin(),x.getDestination(),x.getCc(), x.getBcc(), x.getSubject(), x.getBody(), x.getAttachment())).collect(Collectors.toSet()),
+                    user.getReceivedMessages().stream().map(x -> new MessageDTO(x.getOrigin(),x.getDestination(),x.getCc(), x.getBcc(), x.getSubject(), x.getBody(), x.getAttachment())).collect(Collectors.toSet()));
             return new ResponseEntity<>("Logged out"+userDTO, HttpStatus.OK);
         }catch (Exception e)
         {

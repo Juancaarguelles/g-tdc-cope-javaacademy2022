@@ -14,12 +14,12 @@ public class UserDTO
     private String country;
     private boolean active;
 
-    private Set<Message> allMessages;
-    private Set<Message>sentMessages;
-    private Set<Message>receivedMessages;
+    private Set<MessageDTO> allMessages;
+    private Set<MessageDTO>sentMessages;
+    private Set<MessageDTO>receivedMessages;
 
     public UserDTO(int identification, String userName, String name, String lastName, String state, String country, boolean active
-    ,Set<Message>allMessages,Set<Message>sentMessages, Set<Message>receivedMessages) {
+    ,Set<MessageDTO>allMessages,Set<MessageDTO>sentMessages, Set<MessageDTO>receivedMessages) {
         this.identification = identification;
         this.userName = userName;
         this.name = name;
@@ -34,27 +34,27 @@ public class UserDTO
 
     public UserDTO(){}
 
-    public Set<Message> getAllMessages() {
+    public Set<MessageDTO> getAllMessages() {
         return allMessages;
     }
 
-    public void setAllMessages(Set<Message> allMessages) {
+    public void setAllMessages(Set<MessageDTO> allMessages) {
         this.allMessages = allMessages;
     }
 
-    public Set<Message> getSentMessages() {
+    public Set<MessageDTO> getSentMessages() {
         return sentMessages;
     }
 
-    public void setSentMessages(Set<Message> sentMessages) {
+    public void setSentMessages(Set<MessageDTO> sentMessages) {
         this.sentMessages = sentMessages;
     }
 
-    public Set<Message> getReceivedMessages() {
+    public Set<MessageDTO> getReceivedMessages() {
         return receivedMessages;
     }
 
-    public void setReceivedMessages(Set<Message> receivedMessages) {
+    public void setReceivedMessages(Set<MessageDTO> receivedMessages) {
         this.receivedMessages = receivedMessages;
     }
 
