@@ -37,10 +37,9 @@ public class UserService implements ModelService<User> {
     }
 
 
-    public boolean isRegistered(String username) // throws Exception
+    public boolean isRegistered(Integer id, String username) // throws Exception
     {
-        Optional<User> user = this.userRepository.findByUserName(username).stream().findFirst();
-
+        Optional<User> user = this.userRepository.findByIdentificationOrUserName(id, username).stream().findFirst();
         if (!user.isPresent())
             return false;
         //throw new UserNotRegisteredException(NOT_REGISTERED_EXCEPTION);
@@ -49,7 +48,7 @@ public class UserService implements ModelService<User> {
 
     public boolean couldRegisterUser(User user) throws Exception
     {
-        if (!this.isRegistered(user.getUserName())) {
+        if (!this.isRegistered(user.getIdentification(), user.getUserName())) {
             this.save(user);
             return true;
         }

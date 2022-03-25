@@ -9,6 +9,8 @@ public class User
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false, unique = true)
+    private int identification;
+    @Column(nullable = false, unique = true)
     private String userName;
     @Column(nullable = false)
     private String name;
@@ -22,8 +24,11 @@ public class User
     private String state;
     @Column(nullable = false)
     private String country;
+    @Column(nullable = false)
+    private boolean active;
 
-    public User(String userName, String name, String lastName, String address, String zipCode, String state, String country) {
+    public User(int identification, String userName, String name, String lastName, String address, String zipCode, String state, String country) {
+        this.identification = identification;
         this.userName = userName;
         this.name = name;
         this.lastName = lastName;
@@ -31,6 +36,7 @@ public class User
         this.zipCode = zipCode;
         this.state = state;
         this.country = country;
+        this.active = false;
     }
 
     public User(){}
@@ -39,9 +45,24 @@ public class User
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdentication(int identification)
+    {
+        this.identification = identification;
     }
+
+    public int getIdentification()
+    {
+        return this.identification;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 
     public String getUserName() {
         return userName;
@@ -110,6 +131,7 @@ public class User
                 ", zipCode='" + zipCode + '\'' +
                 ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
+                ", active='" + active + '\'' +
                 '}';
     }
 
@@ -120,6 +142,8 @@ public class User
 
         User user = (User) o;
 
+        if (identification != user.identification) return false;
+        if (active != user.active) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
@@ -133,6 +157,7 @@ public class User
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + identification;
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
@@ -140,6 +165,7 @@ public class User
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
         return result;
     }
 }

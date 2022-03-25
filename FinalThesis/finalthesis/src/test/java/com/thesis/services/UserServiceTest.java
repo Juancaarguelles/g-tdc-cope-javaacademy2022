@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UserServiceTest
 {
     @Mock
@@ -30,29 +28,35 @@ class UserServiceTest
     {
         MockitoAnnotations.openMocks(this);
         Mockito.when(userRepository.findAll()).thenReturn(getUsers());
-        Mockito.when(userRepository.findByUserName(Mockito.any())).thenReturn(
-                Arrays.asList(new User())
+        Mockito.when(userRepository.findByIdentificationOrUserName(Mockito.anyInt(), Mockito.any())).thenReturn(
+                Arrays.asList(new User(987665, "monica","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja"))
         );
+        Mockito.when(userRepository.save(Mockito.any())).thenReturn(null);
     }
 
 
     @Test
     public void return_true_if_user_exits()
     {
-        /*Exception ex = Assertions.assertThrows(UserNotRegisteredException.class, ()
-                ->this.userService.isRegistered(Mockito.any()));*/
-
-        //Assertions.assertEquals(UserService.USER_REGISTERED_EXCEPTION, ex.getMessage());
-
-        Assertions.assertEquals(true, this.userService.isRegistered(Mockito.any()));
+        Assertions.assertEquals(true, this.userService.isRegistered(123, "juanca"));
     }
+
+    @Test
+    public void fails_if_user_could_not_be_registered()
+    {
+        Exception ex = Assertions.assertThrows(UserNotRegisteredException.class, ()-> this.userService.couldRegisterUser(
+                new User(987, "moca","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja")
+        ));
+        Assertions.assertEquals(UserService.USER_REGISTERED_EXCEPTION, ex.getMessage());
+    }
+
 
     public List<User>getUsers()
     {
-        User user1 = new User("juanca","Juan Camilo", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
-        User user2 = new User("juanda","Juan David", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
-        User user3 = new User("will","William", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
-        User user4 = new User("monica","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user1 = new User(1003456, "juanca","Juan Camilo", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user2 = new User(12345,"juanda","Juan David", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user3 = new User(2345,"will","William", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
+        User user4 = new User(987665, "monica","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja");
 
         return new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
     }

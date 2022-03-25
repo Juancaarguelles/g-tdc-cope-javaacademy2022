@@ -50,10 +50,10 @@ public class AdminUserController
         }
     }
 
-    @GetMapping("/test-check/{username}")
-    public ResponseEntity<?>checkUserRegistered(@PathVariable String username)
+    @GetMapping("/test-check/{identification}/{username}")
+    public ResponseEntity<?>checkUserRegistered(@PathVariable int identification, @PathVariable String username)
     {
-        if(this.userService.isRegistered(username))
+        if(this.userService.isRegistered(identification, username))
             return new ResponseEntity<>("User is registered already", HttpStatus.OK);
         else
             return new ResponseEntity<>("User is not registered already", HttpStatus.NOT_FOUND);

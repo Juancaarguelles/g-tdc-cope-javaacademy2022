@@ -24,7 +24,7 @@ public class FinalThesisApplication implements CommandLineRunner {
 
 	private void populateData()
 	{
-		User user1 = new User("juanca", "Juan Camilo", "Arguelles Ardila", "Cra 2 # 32 -49", "12345", "Boyaca", "Colombia");
+		User user1 = new User(100345, "juanca", "Juan Camilo", "Arguelles Ardila", "Cra 2 # 32 -49", "12345", "Boyaca", "Colombia");
 		this.userService.save(user1);
 	}
 }

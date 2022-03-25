@@ -2,15 +2,15 @@ package com.thesis.persistence.dto;
 
 public class UserDTO
 {
-    private Integer id;
+    private int identification;
     private String userName;
     private String name;
     private String lastName;
     private String state;
     private String country;
 
-    public UserDTO(Integer id, String userName, String name, String lastName, String state, String city) {
-        this.id = id;
+    public UserDTO(int identification, String userName, String name, String lastName, String state, String city) {
+        this.identification = identification;
         this.userName = userName;
         this.name = name;
         this.lastName = lastName;
@@ -20,12 +20,12 @@ public class UserDTO
 
     public UserDTO(){}
 
-    public Integer getId() {
-        return id;
+    public int getIdentification() {
+        return identification;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdentification(int identification) {
+        this.identification = identification;
     }
 
     public String getUserName() {
@@ -68,11 +68,12 @@ public class UserDTO
         this.country = country;
     }
 
+
     @Override
     public String toString() {
 
         return "UserDTO{" +
-                "id=" + id +
+                "identification=" + identification +
                 ", userName='" + userName + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +

@@ -104,6 +104,7 @@ class InvoiceServiceTest
      }
 
 
+
     private List<Invoice>getInvoices()
     {
         Invoice invoice1 = Invoice.builder().id("1").companyId(1).amount(10000).expirationDate(LocalDate.of(2022, 8, 26)).build();
