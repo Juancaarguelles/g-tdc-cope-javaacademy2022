@@ -1,0 +1,32 @@
+The context of this project tries to simulate the system of an online game store
+with just only three entities:
+
+*User
+*Game
+*purchase
+
+Each entity has it´s own CRUD endpoints, see below (Better try in Postman):
+
+--USER--
+list all (GET) : http://localhost:8080/users
+get by id (GET) : http://localhost:8080/users/{id}
+save (POST) : http://localhost:8080/users  (You must provide user's body without id in json format)
+update (PUT) : http://localhost:8080/users/{id} (You must provide user's body without id in json format)
+delete (DELETE) : http://localhost:8080/users/{id}
+
+--GAME--
+list all (GET) : http://localhost:8080/games
+get by id (GET) : http://localhost:8080/games/{id}
+save (POST) : http://localhost:8080/games  (You must provide game's body without id in json format)
+update (PUT) : http://localhost:8080/games/{id} (You must provide game's body without id in json format)
+delete (DELETE) : http://localhost:8080/games/{id}
+
+--PURCHASE--
+list all (GET) : http://localhost:8080/purchases
+get by id (GET) : http://localhost:8080/purchases/{id}
+save (POST) : http://localhost:8080/purchases  (You must provide purchase's body without id in json format)
+update (PUT) : http://localhost:8080/purchases/{id} (You must provide purchase's body without id in json format)
+delete (DELETE) : http://localhost:8080/purchases/{id}
+
+NOTE: The database of this project is available in the link posted in the other txt file "Docker repository",
+(I just didn't want to put it here in the same file XD).

@@ -36,6 +36,22 @@ Here you will find all my solutions to the challenges.
 - Screenshots (This is a folder with all Docker's screenshots)
 - get-started-repository-link.txt (Links with my Docker repository)
 
+## Week 6 content
+- challenge-week-6
+- Docker Repository.txt (Links with my Docker repository)
+- Instructions.txt (instructions of how to set up the endpoints)
+
+## Week 7 content
+- GlobantBank
+- Instructions.txt (You will find the way to go to test section)
+
+## Week 8 content
+- metereologic-service
+- instructions.txt (It tells you the main end point to start the project)
+
+##Week 9 (FINAL THESIS)
+-finalthesis
+-Instructions.txt (instructions of how to set up the endpoints)
 
 
 MIT

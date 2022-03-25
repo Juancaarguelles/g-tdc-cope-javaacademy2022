@@ -60,7 +60,7 @@ public class User
         this.zipCode = zipCode;
         this.state = state;
         this.country = country;
-        this.active = true;
+        this.active = false;
     }
 
     public User(){}
@@ -201,8 +201,7 @@ public class User
                 "ZIP CODE : "+zipCode+"\n"+
                 "STATE : "+state+"\n"+
                 "COUNTRY : "+country+"\n"+
-                "ACTIVE : "+active+"\n"+
-                "MESSAGES : "+this.allMessages;
+                "ACTIVE : "+active;
     }
 
     @Override

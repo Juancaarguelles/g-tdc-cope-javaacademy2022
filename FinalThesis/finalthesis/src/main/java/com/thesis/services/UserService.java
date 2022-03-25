@@ -9,8 +9,12 @@ import com.thesis.persistence.model.User;
 import com.thesis.persistence.repository.IUserRepository;
 import com.thesis.utils.EmailVisibility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -156,6 +160,14 @@ public class UserService implements ModelService<User> {
             }
         }
         throw new UserNotFoundException(USER_NOT_FOUND_EXCEPTION);
+    }
+
+    public Page<User>getUsers(Optional<Integer>page, Optional<String>sortBy)
+    {
+        return this.userRepository.findAll(
+                PageRequest.of(page.orElse(0), 5, Sort.Direction.ASC,
+                        sortBy.orElse("id"))
+        );
     }
 
 }
