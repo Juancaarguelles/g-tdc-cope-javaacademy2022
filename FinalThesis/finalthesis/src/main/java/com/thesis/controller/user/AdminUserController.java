@@ -1,5 +1,6 @@
 package com.thesis.controller.user;
 
+import com.thesis.persistence.dto.MessageDTO;
 import com.thesis.persistence.dto.UserDTO;
 import com.thesis.persistence.model.Message;
 import com.thesis.persistence.model.User;
@@ -73,7 +74,9 @@ public class AdminUserController
         try
         {
             this.userService.sendMessage(username, message);
-            return new ResponseEntity<>("Message sended : "+message, HttpStatus.OK);
+            MessageDTO messageDTO = new MessageDTO(message.getOrigin(), message.getDestination(),
+                    message.getCc(), message.getBcc(), message.getSubject(), message.getBody(), message.getAttachment());
+            return new ResponseEntity<>("Message sended : "+messageDTO, HttpStatus.OK);
         }catch (Exception e)
         {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
