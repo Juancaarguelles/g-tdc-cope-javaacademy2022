@@ -49,9 +49,9 @@ Here you will find all my solutions to the challenges.
 - metereologic-service
 - instructions.txt (It tells you the main end point to start the project)
 
-##Week 9 (FINAL THESIS)
--finalthesis
--Instructions.txt (instructions of how to set up the endpoints)
+## Week 9 (FINAL THESIS)
+- finalthesis
+- Instructions.txt (instructions of how to set up the endpoints)
 
 
 MIT
