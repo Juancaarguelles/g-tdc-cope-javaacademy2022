@@ -31,21 +31,20 @@ class UserServiceTest
         MockitoAnnotations.openMocks(this);
         Mockito.when(userRepository.findAll()).thenReturn(getUsers());
         Mockito.when(userRepository.findByUserName(Mockito.any())).thenReturn(
-                Arrays.asList()
+                Arrays.asList(new User())
         );
     }
 
 
     @Test
-    public void fail_if_user_does_not_exits()
+    public void return_true_if_user_exits()
     {
-        Exception ex = Assertions.assertThrows(UserNotRegisteredException.class, ()
-                ->this.userService.isRegistered(Mockito.any()));
+        /*Exception ex = Assertions.assertThrows(UserNotRegisteredException.class, ()
+                ->this.userService.isRegistered(Mockito.any()));*/
 
-        Assertions.assertEquals(UserService.USER_REGISTERED_EXCEPTION, ex.getMessage());
+        //Assertions.assertEquals(UserService.USER_REGISTERED_EXCEPTION, ex.getMessage());
 
-        if(ex != null)
-            System.out.println(ex.getMessage());
+        Assertions.assertEquals(true, this.userService.isRegistered(Mockito.any()));
     }
 
     public List<User>getUsers()
