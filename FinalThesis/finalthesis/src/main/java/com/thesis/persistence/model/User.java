@@ -60,7 +60,7 @@ public class User
         this.zipCode = zipCode;
         this.state = state;
         this.country = country;
-        this.active = true;
+        this.active = false;
     }
 
     public User(){}

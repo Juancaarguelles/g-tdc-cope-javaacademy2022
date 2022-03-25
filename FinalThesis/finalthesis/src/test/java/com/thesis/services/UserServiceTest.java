@@ -3,8 +3,11 @@ package com.thesis.services;
 import com.thesis.exceptions.InvalidCredentialsException;
 import com.thesis.exceptions.UserNotFoundException;
 import com.thesis.exceptions.UserNotRegisteredException;
+import com.thesis.exceptions.UserSessionException;
+import com.thesis.persistence.model.Message;
 import com.thesis.persistence.model.User;
 import com.thesis.persistence.repository.IUserRepository;
+import com.thesis.utils.EmailVisibility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +25,9 @@ class UserServiceTest
 {
     @Mock
     private IUserRepository userRepository;
+
+    @Mock
+    private MessageService messageService;
 
     @InjectMocks
     private UserService userService;
@@ -83,6 +89,24 @@ class UserServiceTest
         Optional<User>user = this.userService.findByUsername(Mockito.any()).stream().findFirst();
         Assertions.assertEquals(new User(987665, "monica","1234","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja")
                 , user.get());
+    }
+
+    @Test
+    public void fails_if_message_is_not_sent_because_user_does_not_exists()
+    {
+        String username = "monicaaaa";
+        Message tempMessage = new Message("spiderman","monica", "Tony Stark", "This is the test", "Hello kid! Im a text", "doc.pdf" );
+        Exception ex = Assertions.assertThrows(UserNotFoundException.class, ()->this.userService.sendMessage(username, tempMessage));
+        Assertions.assertEquals(this.userService.USER_NOT_FOUND_EXCEPTION, ex.getMessage());
+    }
+
+    @Test
+    public void fails_when_user_is_not_logged_in()
+    {
+        String username = "monicaaaa";
+        Message tempMessage = new Message("spiderman","monica", "Tony Stark", "This is the test", "Hello kid! Im a text", "doc.pdf" );
+        Exception ex = Assertions.assertThrows(UserSessionException.class, ()->this.userService.sendMessage(username, tempMessage));
+        Assertions.assertEquals(this.userService.USER_NOT_LOGGED_IN_EXCEPTION, ex.getMessage());
     }
 
     public List<User>getUsers()
