@@ -46,7 +46,8 @@ public class AdminUserController
         {
             User user = this.userService.loggedIn(userName, password);
             UserDTO userDTO = new UserDTO(user.getIdentification(), user.getUserName(),
-                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive());
+                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive(), user.getAllMessages(),
+                    user.getSentMessages(), user.getReceivedMessages());
             return new ResponseEntity<>("Logged in"+userDTO, HttpStatus.OK);
         }catch (Exception e)
         {
@@ -60,7 +61,8 @@ public class AdminUserController
         try{
             User user = this.userService.logout(username);
             UserDTO userDTO = new UserDTO(user.getIdentification(), user.getUserName(),
-                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive());
+                    user.getName(), user.getLastName(), user.getState(), user.getCountry(), user.isActive(),
+                    user.getAllMessages(), user.getSentMessages(), user.getReceivedMessages());
             return new ResponseEntity<>("Logged out"+userDTO, HttpStatus.OK);
         }catch (Exception e)
         {

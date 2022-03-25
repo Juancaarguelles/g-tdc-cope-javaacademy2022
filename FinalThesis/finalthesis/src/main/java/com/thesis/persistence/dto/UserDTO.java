@@ -1,5 +1,9 @@
 package com.thesis.persistence.dto;
 
+import com.thesis.persistence.model.Message;
+
+import java.util.Set;
+
 public class UserDTO
 {
     private int identification;
@@ -10,7 +14,12 @@ public class UserDTO
     private String country;
     private boolean active;
 
-    public UserDTO(int identification, String userName, String name, String lastName, String state, String country, boolean active) {
+    private Set<Message> allMessages;
+    private Set<Message>sentMessages;
+    private Set<Message>receivedMessages;
+
+    public UserDTO(int identification, String userName, String name, String lastName, String state, String country, boolean active
+    ,Set<Message>allMessages,Set<Message>sentMessages, Set<Message>receivedMessages) {
         this.identification = identification;
         this.userName = userName;
         this.name = name;
@@ -18,9 +27,36 @@ public class UserDTO
         this.state = state;
         this.country = country;
         this.active = active;
+        this.allMessages = allMessages;
+        this.sentMessages = sentMessages;
+        this.receivedMessages = receivedMessages;
     }
 
     public UserDTO(){}
+
+    public Set<Message> getAllMessages() {
+        return allMessages;
+    }
+
+    public void setAllMessages(Set<Message> allMessages) {
+        this.allMessages = allMessages;
+    }
+
+    public Set<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public void setSentMessages(Set<Message> sentMessages) {
+        this.sentMessages = sentMessages;
+    }
+
+    public Set<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void setReceivedMessages(Set<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
+    }
 
     public boolean isActive() {
         return active;
@@ -88,6 +124,9 @@ public class UserDTO
                 "LAST NAME : "+lastName+"\n"+
                 "STATE : "+state+"\n"+
                 "COUNTRY : "+country+"\n"+
-                "ACTIVE : "+active;
+                "ACTIVE : "+active+"\n"+
+                "ALL MESSAGES : "+allMessages+"\n"+
+                "RECEIVED MESSAGES : "+receivedMessages+"\n"+
+                "SENT MESSAGES : "+sentMessages;
     }
 }

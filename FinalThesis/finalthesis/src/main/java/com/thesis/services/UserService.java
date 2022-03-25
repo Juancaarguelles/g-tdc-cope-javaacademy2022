@@ -8,16 +8,12 @@ import com.thesis.persistence.model.Message;
 import com.thesis.persistence.model.User;
 import com.thesis.persistence.repository.IUserRepository;
 import com.thesis.utils.EmailVisibility;
-import com.thesis.utils.StringConversor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
-import java.beans.Visibility;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -112,17 +108,17 @@ public class UserService implements ModelService<User> {
     public void setDestinationAndCCOfMessage(String[]destinations, Message message, EmailVisibility visibility)
     {
         Message tempMessage = new Message(message);
+
         if(visibility == EmailVisibility.HIDDEN)
         tempMessage.setBcc("");
-        else
-            System.out.println(message.getBcc());
 
         Stream.of(destinations).forEach(userName ->{
 
             Optional<User>userTemp = this.findByUsername(userName);
 
             if(userTemp.isPresent() && userTemp.get().isActive()) {
-                userTemp.get().addMessage(tempMessage);
+                userTemp.get().addToReceivedMessages(tempMessage);
+                userTemp.get().addToAllMessages(tempMessage);
                 this.userRepository.save(userTemp.get());
             }
         });
@@ -138,7 +134,8 @@ public class UserService implements ModelService<User> {
             if(user.get().isActive())
             {
                 message.setOrigin(user.get().getUserName());
-                user.get().addMessage(message);
+                user.get().addToAllMessages(message);
+                user.get().addToSentMessages(message);
                 this.userRepository.save(user.get());
 
                 String[]bcc = message.getBcc().split("[\\s,]+");

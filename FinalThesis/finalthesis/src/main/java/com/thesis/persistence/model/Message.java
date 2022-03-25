@@ -27,6 +27,31 @@ public class Message
     @ManyToMany(mappedBy = "allMessages")
     private Set<User> users = new HashSet<>();
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "sentMessages")
+    private Set<User> usersSent = new HashSet<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "receivedMessages")
+    private Set<User> usersReceived = new HashSet<>();
+
+    public Set<User> getUsersReceived() {
+        return usersReceived;
+    }
+
+    public void setUsersReceived(Set<User> usersReceived) {
+        this.usersReceived = usersReceived;
+    }
+
+    public Set<User> getUsersSent() {
+        return usersSent;
+    }
+
+    public void setUsersSent(Set<User> usersSent) {
+        this.usersSent = usersSent;
+    }
+
+
     public Message(){}
 
     public Message(String to, String cc, String bcc, String subject, String body, String attachment) {

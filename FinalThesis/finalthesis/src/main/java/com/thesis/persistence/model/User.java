@@ -31,8 +31,24 @@ public class User
     @Column(nullable = false)
     private boolean active;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_messages", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
+    @JoinTable(name = "all_users_messages", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
     private Set<Message> allMessages = new HashSet<>();
+
+    public Set<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void setReceivedMessages(Set<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "sent_users_messages", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
+    private Set<Message> sentMessages = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "received_users_messages", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
+    private Set<Message> receivedMessages = new HashSet<>();
 
     public User(int identification, String userName, String password, String name, String lastName, String address, String zipCode, String state, String country) {
         this.identification = identification;
@@ -49,9 +65,27 @@ public class User
 
     public User(){}
 
-    public void addMessage(Message message)
+    public Set<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public void setSentMessages(Set<Message> sentMessages) {
+        this.sentMessages = sentMessages;
+    }
+
+    public void addToAllMessages(Message message)
     {
         this.allMessages.add(message);
+    }
+
+    public void addToSentMessages(Message message)
+    {
+        this.sentMessages.add(message);
+    }
+
+    public void addToReceivedMessages(Message message)
+    {
+        this.receivedMessages.add(message);
     }
 
     public Integer getId() {
