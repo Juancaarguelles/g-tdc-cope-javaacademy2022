@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 class UserServiceTest
 {
@@ -38,6 +39,11 @@ class UserServiceTest
                 thenReturn(Arrays.asList());
 
         Mockito.when(userRepository.findByUserName(Mockito.any())).thenReturn(Arrays.asList());
+
+        Mockito.when(userRepository.findByUserName(Mockito.any())).thenReturn(Arrays.asList(
+                new User(987665, "monica","1234","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja"))
+
+        );
     }
 
 
@@ -70,6 +76,13 @@ class UserServiceTest
         Assertions.assertEquals(UserService.USER_NOT_FOUND_EXCEPTION, ex.getMessage());
     }
 
+    @Test
+    public void return_true_if_finds_one()
+    {
+        Optional<User>user = this.userService.findByUsername(Mockito.any()).stream().findFirst();
+        Assertions.assertEquals(new User(987665, "monica","1234","Monica", "Arguelles Ardila", "Cra 2 # 32-49", "1234455", "Boyaca", "Tunja")
+                , user.get());
+    }
 
     public List<User>getUsers()
     {
